@@ -1,0 +1,25 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class Cube : MonoBehaviour {
+
+	// Use this for initialization
+	void Start () {
+	//EventManager.StartAnim += CubeAnimate;
+	EventManager.EventTypeWithOneParameter += HandleEventManagerEventTypeWithOneParameter;
+		}
+
+	void HandleEventManagerEventTypeWithOneParameter (bool arg1)
+	{
+		Debug.Log(arg1 + gameObject.name);
+	}
+	
+	// Update is called once per frame
+	void Update () {
+	
+	}
+	void CubeAnimate(){ // action to be performed i.e delegate method.
+		Debug.Log("Star Cube animate" + gameObject.name);
+		
+	}
+}
