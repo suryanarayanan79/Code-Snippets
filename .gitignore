@@ -1,0 +1,12 @@
+/GroundUP/Debug/*.tlog
+/GroundUP/Debug/*.obj
+/GroundUP/Debug/*.manifest
+/GroundUP/Debug/*.res
+/GroundUP/Debug/*.lastbuildstate
+/GroundUP/Debug/*.log
+/GroundUP/Debug/*.rc
+/GroundUP/Debug/*.idb
+/GroundUP/Debug/*.pdb
+/GroundUP/*.vcxproj
+/GroundUP/*.filters
+/GroundUP/*.user
