@@ -9,10 +9,10 @@ public:
 	struct Node* tail;
 	struct Node* head;
 	
-	int Length;
+	
 	TList(){
-		tail = 0;// NULL or 0 both are valid.
-		Length = 0;
+		tail = NULL;// NULL or 0 both are valid.
+		head = NULL;
 	}
 
 	~TList(){
@@ -21,24 +21,15 @@ public:
 	void Add(int data){
 		if(tail == NULL){
 			cout << "I am here" << endl;
-			Node* temp;
-			temp = new Node; // create a some address space.
-			temp->data = data;
-			temp->next = NULL;
-			tail = temp;
-			head = temp;
+			tail = CreateNode(data);
+			head = tail;
 		}else 
 			// add to the end.
-			
 		{
 			while(tail->next != NULL){
 				tail = tail->next;
 			}
-			Node *temp;
-			temp = new Node;
-			temp->data = data;
-			temp->next = NULL;
-			tail->next = temp;
+			tail->next = CreateNode(data);
 		} 
 	}
 
@@ -47,21 +38,28 @@ public:
 
 	void Insert(){
 	}
-	void CountNodes(){
-		
-		tail = head;
-		while(tail != NULL){
-			tail = tail->next;
-			Length++;
+	int CountNodes(){
+		int length = 0;
+		Node* firstNode = head;
+		while (firstNode != NULL){
+			length++;
+			firstNode = firstNode->next;
 		}
-		cout << "Lenght of the list is"  << Length;
+		return length;
+	}
+
+	Node* CreateNode(int data){
+		Node* tempNode = new Node();
+		tempNode->data = data;
+		tempNode->next = NULL;
+		return tempNode;
 	}
 
 	void Display(){
-		tail = head;
-		while(tail != NULL){
-			cout << tail->data << endl;			
-			tail = tail->next;
+		Node* firstNode = head;
+		while(firstNode != NULL){
+			cout << firstNode->data << endl;			
+			firstNode = firstNode->next;
 		}
 	}
 };
@@ -72,9 +70,7 @@ int main(){
 	list.Add(20);
 	list.Add(30);
 	list.Add(40);
+	cout << "Lenght of the list is" << list.CountNodes();
 	list.Display();
-	list.Display();
-	//duplicates of display was not possible using 
-	list.CountNodes();
 	return 1;
 }
