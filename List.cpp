@@ -71,7 +71,23 @@ public:
 
 	//}
 
-	void Insert(){
+	void Insert(int index , int data){
+		Node* currentNode = head;
+		Node* previousNode;
+		Node* newNode = CreateNode(data);
+		if (index == 0){
+			head = newNode;
+			newNode->next = currentNode;
+			return;
+		}
+		int count = 0;
+		while (count < index){
+			previousNode = currentNode;
+			currentNode = currentNode->next;
+			count++;
+		}
+		previousNode->next = newNode;
+		newNode->next = currentNode;
 	}
 
 	int CountNodes(){
@@ -106,6 +122,7 @@ int main(){
 	list.Add(20);
 	list.Add(30);
 	list.Add(40);
+	list.Insert(0,12);
 	cout << "Lenght of the list is" << list.CountNodes();
 	list.Display();
 	list.Delete(0);
