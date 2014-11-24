@@ -1,18 +1,21 @@
 #include <iostream>
 using namespace std;
-class TList{
+class Node{
 public:
-	struct Node{
-		Node *next;
-		int data; // make this to hold any data. to be generic.
-	};
-	struct Node* tail;
-	struct Node* head;
-	
-	
+	Node* next;
+	int data;
+};
+
+class TList{
+
+public:
+
+	Node* head;
+	Node* tail;
+
 	TList(){
 		tail = NULL;// NULL or 0 both are valid.
-		head = NULL;
+		head = NULL;	
 	}
 
 	~TList(){
@@ -33,11 +36,44 @@ public:
 		} 
 	}
 
-	void Delete(){
+	void Delete(int index){
+	// traverse thru the list till index.
+		// take a reference of current node and next node.
+		// delete the current node and make the next node as current node.
+		// handled invalid index.
+		// handled first node also.
+		Node* temp = head;
+		Node* newnode = NULL;
+		Node* previousNode = NULL;
+		int count = 0;
+		if (head == NULL || index > CountNodes()) {
+			cout << "Invalid Index";
+			return;
+		};
+
+		if (index == 0){ // delete the first node
+			newnode = temp->next;
+			delete temp;
+			head = newnode;
+			return;
+		}
+		while (count < index){
+			previousNode = temp;
+			temp = temp->next;
+			count++; 
+		}
+		newnode = temp->next;
+		delete temp;
+		previousNode->next = newnode;
 	}
+
+	//void Delete(Node* temp){// Node* temp
+
+	//}
 
 	void Insert(){
 	}
+
 	int CountNodes(){
 		int length = 0;
 		Node* firstNode = head;
@@ -71,6 +107,9 @@ int main(){
 	list.Add(30);
 	list.Add(40);
 	cout << "Lenght of the list is" << list.CountNodes();
+	list.Display();
+	list.Delete(0);
+	cout << "\nAfter deleted\n";
 	list.Display();
 	return 1;
 }
