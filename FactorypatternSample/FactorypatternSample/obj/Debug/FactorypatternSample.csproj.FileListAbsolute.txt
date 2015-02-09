@@ -1,0 +1,6 @@
+F:\C#WorkOuts\FactorypatternSample\FactorypatternSample\bin\Debug\FactorypatternSample.exe.config
+F:\C#WorkOuts\FactorypatternSample\FactorypatternSample\bin\Debug\FactorypatternSample.exe
+F:\C#WorkOuts\FactorypatternSample\FactorypatternSample\bin\Debug\FactorypatternSample.pdb
+F:\C#WorkOuts\FactorypatternSample\FactorypatternSample\obj\Debug\FactorypatternSample.csprojResolveAssemblyReference.cache
+F:\C#WorkOuts\FactorypatternSample\FactorypatternSample\obj\Debug\FactorypatternSample.exe
+F:\C#WorkOuts\FactorypatternSample\FactorypatternSample\obj\Debug\FactorypatternSample.pdb

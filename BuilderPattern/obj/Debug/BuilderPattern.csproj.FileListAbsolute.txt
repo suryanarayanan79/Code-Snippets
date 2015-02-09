@@ -1,0 +1,6 @@
+F:\C#WorkOuts\BuilderPattern\bin\Debug\BuilderPattern.exe.config
+F:\C#WorkOuts\BuilderPattern\bin\Debug\BuilderPattern.exe
+F:\C#WorkOuts\BuilderPattern\bin\Debug\BuilderPattern.pdb
+F:\C#WorkOuts\BuilderPattern\obj\Debug\BuilderPattern.exe
+F:\C#WorkOuts\BuilderPattern\obj\Debug\BuilderPattern.pdb
+F:\C#WorkOuts\BuilderPattern\obj\Debug\BuilderPattern.csprojResolveAssemblyReference.cache

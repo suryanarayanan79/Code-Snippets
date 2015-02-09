@@ -1,0 +1,6 @@
+F:\C#WorkOuts\ProtoTypePattern\bin\Debug\ProtoTypePattern.exe.config
+F:\C#WorkOuts\ProtoTypePattern\obj\Debug\ProtoTypePattern.csprojResolveAssemblyReference.cache
+F:\C#WorkOuts\ProtoTypePattern\bin\Debug\ProtoTypePattern.exe
+F:\C#WorkOuts\ProtoTypePattern\bin\Debug\ProtoTypePattern.pdb
+F:\C#WorkOuts\ProtoTypePattern\obj\Debug\ProtoTypePattern.exe
+F:\C#WorkOuts\ProtoTypePattern\obj\Debug\ProtoTypePattern.pdb
