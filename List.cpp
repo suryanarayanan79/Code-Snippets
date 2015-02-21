@@ -114,6 +114,17 @@ public:
 			firstNode = firstNode->next;
 		}
 	}
+		// Recurcive Display
+	void Display(Node* node){
+			cout << node->data << endl;
+			if(node->next != NULL)Display(node->next);
+	}
+	// Recurcive Display
+	void ReverseDisplay(Node* node){
+		if (node->next != NULL)ReverseDisplay(node->next);
+		cout << node->data << endl;
+	}
+
 };
 
 int main(){
