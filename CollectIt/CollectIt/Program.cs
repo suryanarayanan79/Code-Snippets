@@ -31,6 +31,8 @@ namespace CollectIt
             {
                 Add(departmentName, new SortedSet<Employee>(new EmployeeComparer()));
             }
+            // this part of the code is important.
+            // Run this code to understand the purpose of the Dictionary<string , SortedSet<Employee>>
             this[departmentName].Add(employee);
             return this;
         }
@@ -65,3 +67,5 @@ namespace CollectIt
         }
     }
 }
+
+

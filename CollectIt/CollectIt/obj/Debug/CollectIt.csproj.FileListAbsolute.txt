@@ -10,3 +10,9 @@ C:\Users\Surya\Google डिस्क\C#\Generics\3-csharp-generics-m3-classes-e
 C:\Users\Surya\Google डिस्क\C#\Generics\3-csharp-generics-m3-classes-exercise-files\excercises\after\CollectIt\CollectIt\bin\Debug\CollectIt.exe
 C:\Users\Surya\Google डिस्क\C#\Generics\3-csharp-generics-m3-classes-exercise-files\excercises\after\CollectIt\CollectIt\bin\Debug\CollectIt.pdb
 C:\Users\Surya\Google डिस्क\C#\Generics\3-csharp-generics-m3-classes-exercise-files\excercises\after\CollectIt\CollectIt\obj\Debug\CollectIt.csprojResolveAssemblyReference.cache
+C:\Users\Surya\Source\Repos\Code-Snippets\CollectIt\CollectIt\bin\Debug\CollectIt.exe.config
+C:\Users\Surya\Source\Repos\Code-Snippets\CollectIt\CollectIt\obj\Debug\CollectIt.exe
+C:\Users\Surya\Source\Repos\Code-Snippets\CollectIt\CollectIt\obj\Debug\CollectIt.pdb
+C:\Users\Surya\Source\Repos\Code-Snippets\CollectIt\CollectIt\bin\Debug\CollectIt.exe
+C:\Users\Surya\Source\Repos\Code-Snippets\CollectIt\CollectIt\bin\Debug\CollectIt.pdb
+C:\Users\Surya\Source\Repos\Code-Snippets\CollectIt\CollectIt\obj\Debug\CollectIt.csprojResolveAssemblyReference.cache

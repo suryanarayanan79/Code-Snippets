@@ -1,0 +1,7 @@
+c:\users\scott\documents\visual studio 2013\Projects\CollectIt\CollectIt.Tests\bin\Debug\CollectIt.Tests.dll
+c:\users\scott\documents\visual studio 2013\Projects\CollectIt\CollectIt.Tests\bin\Debug\CollectIt.Tests.pdb
+c:\users\scott\documents\visual studio 2013\Projects\CollectIt\CollectIt.Tests\bin\Debug\CollectIt.exe
+c:\users\scott\documents\visual studio 2013\Projects\CollectIt\CollectIt.Tests\bin\Debug\CollectIt.pdb
+c:\users\scott\documents\visual studio 2013\Projects\CollectIt\CollectIt.Tests\obj\Debug\CollectIt.Tests.csprojResolveAssemblyReference.cache
+c:\users\scott\documents\visual studio 2013\Projects\CollectIt\CollectIt.Tests\obj\Debug\CollectIt.Tests.dll
+c:\users\scott\documents\visual studio 2013\Projects\CollectIt\CollectIt.Tests\obj\Debug\CollectIt.Tests.pdb

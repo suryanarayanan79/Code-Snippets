@@ -1,0 +1,6 @@
+C:\Users\Scott\Documents\Visual Studio 2013\Projects\DataStructures\DataStructures\bin\Debug\DataStructures.exe.config
+C:\Users\Scott\Documents\Visual Studio 2013\Projects\DataStructures\DataStructures\bin\Debug\DataStructures.exe
+C:\Users\Scott\Documents\Visual Studio 2013\Projects\DataStructures\DataStructures\bin\Debug\DataStructures.pdb
+C:\Users\Scott\Documents\Visual Studio 2013\Projects\DataStructures\DataStructures\obj\Debug\DataStructures.csprojResolveAssemblyReference.cache
+C:\Users\Scott\Documents\Visual Studio 2013\Projects\DataStructures\DataStructures\obj\Debug\DataStructures.exe
+C:\Users\Scott\Documents\Visual Studio 2013\Projects\DataStructures\DataStructures\obj\Debug\DataStructures.pdb

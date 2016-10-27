@@ -1,0 +1,6 @@
+c:\users\scott\documents\visual studio 2013\Projects\CollectIt\CollectIt\bin\Debug\CollectIt.exe.config
+c:\users\scott\documents\visual studio 2013\Projects\CollectIt\CollectIt\bin\Debug\CollectIt.exe
+c:\users\scott\documents\visual studio 2013\Projects\CollectIt\CollectIt\bin\Debug\CollectIt.pdb
+c:\users\scott\documents\visual studio 2013\Projects\CollectIt\CollectIt\obj\Debug\CollectIt.csprojResolveAssemblyReference.cache
+c:\users\scott\documents\visual studio 2013\Projects\CollectIt\CollectIt\obj\Debug\CollectIt.exe
+c:\users\scott\documents\visual studio 2013\Projects\CollectIt\CollectIt\obj\Debug\CollectIt.pdb

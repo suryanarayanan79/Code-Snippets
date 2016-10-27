@@ -1,0 +1,6 @@
+C:\Users\Surya\Google डिस्क\C#\Generics\4-csharp-generics-m4-methods-exercise-files\excercises\after\DataStructures\DataStructures\bin\Debug\DataStructures.exe.config
+C:\Users\Surya\Google डिस्क\C#\Generics\4-csharp-generics-m4-methods-exercise-files\excercises\after\DataStructures\DataStructures\bin\Debug\DataStructures.exe
+C:\Users\Surya\Google डिस्क\C#\Generics\4-csharp-generics-m4-methods-exercise-files\excercises\after\DataStructures\DataStructures\bin\Debug\DataStructures.pdb
+C:\Users\Surya\Google डिस्क\C#\Generics\4-csharp-generics-m4-methods-exercise-files\excercises\after\DataStructures\DataStructures\obj\Debug\DataStructures.csprojResolveAssemblyReference.cache
+C:\Users\Surya\Google डिस्क\C#\Generics\4-csharp-generics-m4-methods-exercise-files\excercises\after\DataStructures\DataStructures\obj\Debug\DataStructures.exe
+C:\Users\Surya\Google डिस्क\C#\Generics\4-csharp-generics-m4-methods-exercise-files\excercises\after\DataStructures\DataStructures\obj\Debug\DataStructures.pdb
