@@ -1,0 +1,632 @@
+            PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+                .EnableSavedGames()
+                .Build();
+				
+   public struct PlayGamesClientConfiguration
+    {
+        /// <summary>
+        /// The default configuration.
+        /// </summary>
+        public static readonly PlayGamesClientConfiguration DefaultConfiguration =
+            new Builder().Build();
+
+        /// <summary>
+        /// Flag indicating to enable saved games API.
+        /// </summary>
+        private readonly bool mEnableSavedGames;
+
+        /// <summary>
+        /// Flag indicating to request use of a player's Google+ social graph.
+        /// </summary>
+        private readonly bool mRequireGooglePlus;
+
+        /// <summary>
+        /// The invitation delegate.
+        /// </summary>
+        private readonly InvitationReceivedDelegate mInvitationDelegate;
+
+        /// <summary>
+        /// The match delegate.
+        /// </summary>
+        private readonly MatchDelegate mMatchDelegate;
+
+        /// <summary>
+        /// The permission rationale message to show in Android when requesting
+        /// the GET_ACCOUNTS permission to get email and tokens.
+        /// </summary>
+        private readonly string mPermissionRationale;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GooglePlayGames.BasicApi.PlayGamesClientConfiguration"/> struct.
+        /// </summary>
+        /// <param name="builder">Builder for this configuration.</param>
+        private PlayGamesClientConfiguration(Builder builder)
+        {
+            this.mEnableSavedGames = builder.HasEnableSaveGames();
+            this.mInvitationDelegate = builder.GetInvitationDelegate();
+            this.mMatchDelegate = builder.GetMatchDelegate();
+            this.mPermissionRationale = builder.GetPermissionRationale();
+            this.mRequireGooglePlus = builder.HasRequireGooglePlus();
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="GooglePlayGames.BasicApi.PlayGamesClientConfiguration"/>
+        /// enable saved games.
+        /// </summary>
+        /// <value><c>true</c> if enable saved games; otherwise, <c>false</c>.</value>
+        public bool EnableSavedGames
+        {
+            get
+            {
+                return mEnableSavedGames;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether this <see cref="GooglePlayGames.BasicApi.PlayGamesClientConfiguration"/>
+        /// requests a player's Google+ social graph.
+        /// </summary>
+        /// <value><c>true</c> if requests Google+ social graph; otherwise, <c>false</c>.</value>
+        public bool RequireGooglePlus
+        {
+            get
+            {
+                return mRequireGooglePlus;
+            }
+        }
+
+        /// <summary>
+        /// Gets the invitation delegate.
+        /// </summary>
+        /// <value>The invitation delegate.</value>
+        public InvitationReceivedDelegate InvitationDelegate
+        {
+            get
+            {
+                return mInvitationDelegate;
+            }
+        }
+
+        /// <summary>
+        /// Gets the match delegate.
+        /// </summary>
+        /// <value>The match delegate.</value>
+        public MatchDelegate MatchDelegate
+        {
+            get
+            {
+                return mMatchDelegate;
+            }
+        }
+
+        /// <summary>
+        /// Gets the permission rationale.
+        /// </summary>
+        /// <value>The permission rationale.</value>
+        public string PermissionRationale
+        {
+            get
+            {
+                return mPermissionRationale;
+            }
+        }
+
+        /// <summary>
+        /// Builder class for the configuration.
+        /// </summary>
+        public class Builder
+        {
+            /// <summary>
+            /// The flag to enable save games. Default is false.
+            /// </summary>
+            private bool mEnableSaveGames = false;
+
+            /// <summary>
+            /// The flag to request Google+. Default is false.
+            /// </summary>
+            private bool mRequireGooglePlus = false;
+
+            /// <summary>
+            /// The invitation delegate.  Default is a no-op;
+            /// </summary>
+            private InvitationReceivedDelegate mInvitationDelegate = delegate
+            {
+            };
+
+            /// <summary>
+            /// The match delegate.  Default is a no-op.
+            /// </summary>
+            private MatchDelegate mMatchDelegate = delegate
+            {
+            };
+
+            /// <summary>
+            /// The rationale for the GET_ACCOUNTS permission in android.
+            /// Default is empty.
+            /// </summary>
+            private string mRationale;
+
+            /// <summary>
+            /// Enables the saved games.
+            /// </summary>
+            /// <returns>The builder.</returns>
+            public Builder EnableSavedGames()
+            {
+                mEnableSaveGames = true;
+                return this;
+            }
+
+            /// <summary>
+            /// Requests use of the player's Google+ social graph.
+            /// </summary>
+            /// <remarks>
+            /// Set this to request use of the player's Google+ social graph. Setting
+            /// this will require Android users to have a Google+ profile in order
+            /// to be able to sign in (on iOS, users must always have one).
+            /// </remarks>
+            /// <returns>The builder.</returns>
+            public Builder RequireGooglePlus()
+            {
+                mRequireGooglePlus = true;
+                return this;
+            }
+
+            /// <summary>
+            /// Adds the invitation delegate.  This is called when an invitation
+            /// is received.
+            /// </summary>
+            /// <returns>The builder</returns>
+            /// <param name="invitationDelegate">Invitation delegate.</param>
+            public Builder WithInvitationDelegate(InvitationReceivedDelegate invitationDelegate)
+            {
+                this.mInvitationDelegate = Misc.CheckNotNull(invitationDelegate);
+                return this;
+            }
+
+            /// <summary>
+            /// Adds the match delegate.  This is called when a match notification
+            /// is received.
+            /// </summary>
+            /// <returns>The builder.</returns>
+            /// <param name="matchDelegate">Match delegate.</param>
+            public Builder WithMatchDelegate(MatchDelegate matchDelegate)
+            {
+                this.mMatchDelegate = Misc.CheckNotNull(matchDelegate);
+                return this;
+            }
+
+            /// <summary>
+            /// Adds the permission rationale.  This is used only in Android
+            /// when accessing the email or tokens of the player.  This is the
+            /// rationale for asking for the GET_ACCOUNTS permission.
+            /// </summary>
+            /// <returns>The permission rationale.</returns>
+            /// <param name="rationale">Rationale to display.</param>
+            public Builder WithPermissionRationale(string rationale)
+            {
+                this.mRationale = rationale;
+                return this;
+            }
+
+            /// <summary>
+            /// Build this instance.
+            /// </summary>
+            /// <returns>the client configuration instance</returns>
+            public PlayGamesClientConfiguration Build()
+            {
+                mRequireGooglePlus = GameInfo.RequireGooglePlus();
+                return new PlayGamesClientConfiguration(this);
+            }
+
+            /// <summary>
+            /// Determines whether this instance has enable save games.
+            /// </summary>
+            /// <returns><c>true</c> if this instance has enable save games; otherwise, <c>false</c>.</returns>
+            internal bool HasEnableSaveGames()
+            {
+                return mEnableSaveGames;
+            }
+
+            /// <summary>
+            /// Determines whether this instance has Google+ required.
+            /// </summary>
+            /// <returns><c>true</c> if this instance has Google+ required; otherwise, <c>false</c>.</returns>
+            internal bool HasRequireGooglePlus()
+            {
+                return mRequireGooglePlus;
+            }
+
+            /// <summary>
+            /// Gets the match delegate.
+            /// </summary>
+            /// <returns>The match delegate.</returns>
+            internal MatchDelegate GetMatchDelegate()
+            {
+                return mMatchDelegate;
+            }
+
+            /// <summary>
+            /// Gets the invitation delegate.
+            /// </summary>
+            /// <returns>The invitation delegate.</returns>
+            internal InvitationReceivedDelegate GetInvitationDelegate()
+            {
+                return mInvitationDelegate;
+            }
+
+            /// <summary>
+            /// Gets the permission rationale.
+            /// </summary>
+            /// <returns>The permission rationale.</returns>
+            internal string GetPermissionRationale()
+            {
+                return mRationale;
+            }
+        }
+    }
+	
+	
+	
+	
+	        public static string MakeStars(int stars)
+        {
+            if (stars <= 0)
+            {
+                return "";
+            }
+            const string YesStar = "\u2605";
+            const string NoStar = "\u2606";
+            string s = "";
+            int i;
+            for (i = 0; i < 3; i++)
+            {
+                s += (stars > i ? YesStar : NoStar) + " ";
+            }
+            return s.Trim();
+        }
+		
+		
+		
+        public static float SineWave(float amplitude, float period, float phase)
+        {
+            float t = Time.timeSinceLevelLoad + phase * period;
+            return amplitude * Mathf.Sin(t * 2 * Mathf.PI / period);
+        }
+		
+		
+		        public static float Clamp(float f, float min, float max)
+        {
+            return f < min ? min : f > max ? max : f;
+        }
+
+        public static int Clamp(int f, int min, int max)
+        {
+            return f < min ? min : f > max ? max : f;
+        }
+
+        public static float Interpolate(float x1, float y1, float x2, float y2, float x)
+        {
+            return x < x1 ? y1 : x > x2 ? y2 : y1 + (y2 - y1) * (x - x1) / (x2 - x1);
+        }
+		
+		
+		        // Evaluates a function with a trapezoid shape (increases from 0.0 to 1.0,
+        // then stays flat for a while, then decreases from 1.0 to 0.0).
+        // f(x) will vary between 0.0 and 1.0 when x varies between 0 and climbEndX
+        // f(x) is 1.0 between climbEndX and length - climbEndX
+        // f(x) decreases from 1.0 to 0.0 when x decreases from length - climbEndX to length
+        // f(x) is 0.0 for all other x.
+        public static float Trapezoid(float length, float climbEndX, float x)
+        {
+            return x < 0.0f ? 0.0f : x > length ? 0.0f :
+            x < climbEndX ? (x / climbEndX) :
+            x > length - climbEndX ? (length - x) / climbEndX : 1.0f;
+        }
+            /// <summary>
+            /// The flag to enable save games. Default is false.
+            /// </summary>
+            private bool mEnableSaveGames = false;
+
+            /// <summary>
+            /// The flag to request Google+. Default is false.
+            /// </summary>
+            private bool mRequireGooglePlus = false;
+
+            /// <summary>
+            /// The invitation delegate.  Default is a no-op;
+            /// </summary>
+            private InvitationReceivedDelegate mInvitationDelegate = delegate
+            {
+            };
+
+            /// <summary>
+            /// The match delegate.  Default is a no-op.
+            /// </summary>
+            private MatchDelegate mMatchDelegate = delegate
+            {
+            };
+
+            /// <summary>
+            /// The rationale for the GET_ACCOUNTS permission in android.
+            /// Default is empty.
+            /// </summary>
+            private string mRationale;
+
+            /// <summary>
+            /// Enables the saved games.
+            /// </summary>
+            /// <returns>The builder.</returns>
+            public Builder EnableSavedGames()
+            {
+                mEnableSaveGames = true;
+                return this;
+            }
+
+            /// <summary>
+            /// Requests use of the player's Google+ social graph.
+            /// </summary>
+            /// <remarks>
+            /// Set this to request use of the player's Google+ social graph. Setting
+            /// this will require Android users to have a Google+ profile in order
+            /// to be able to sign in (on iOS, users must always have one).
+            /// </remarks>
+            /// <returns>The builder.</returns>
+            public Builder RequireGooglePlus()
+            {
+                mRequireGooglePlus = true;
+                return this;
+            }
+
+            /// <summary>
+            /// Adds the invitation delegate.  This is called when an invitation
+            /// is received.
+            /// </summary>
+            /// <returns>The builder</returns>
+            /// <param name="invitationDelegate">Invitation delegate.</param>
+            public Builder WithInvitationDelegate(InvitationReceivedDelegate invitationDelegate)
+            {
+                this.mInvitationDelegate = Misc.CheckNotNull(invitationDelegate);
+                return this;
+            }
+
+            /// <summary>
+            /// Adds the match delegate.  This is called when a match notification
+            /// is received.
+            /// </summary>
+            /// <returns>The builder.</returns>
+            /// <param name="matchDelegate">Match delegate.</param>
+            public Builder WithMatchDelegate(MatchDelegate matchDelegate)
+            {
+                this.mMatchDelegate = Misc.CheckNotNull(matchDelegate);
+                return this;
+            }
+
+            /// <summary>
+            /// Adds the permission rationale.  This is used only in Android
+            /// when accessing the email or tokens of the player.  This is the
+            /// rationale for asking for the GET_ACCOUNTS permission.
+            /// </summary>
+            /// <returns>The permission rationale.</returns>
+            /// <param name="rationale">Rationale to display.</param>
+            public Builder WithPermissionRationale(string rationale)
+            {
+                this.mRationale = rationale;
+                return this;
+            }
+
+            /// <summary>
+            /// Build this instance.
+            /// </summary>
+            /// <returns>the client configuration instance</returns>
+            public PlayGamesClientConfiguration Build()
+            {
+                mRequireGooglePlus = GameInfo.RequireGooglePlus();
+                return new PlayGamesClientConfiguration(this);
+            }
+
+            /// <summary>
+            /// Determines whether this instance has enable save games.
+            /// </summary>
+            /// <returns><c>true</c> if this instance has enable save games; otherwise, <c>false</c>.</returns>
+            internal bool HasEnableSaveGames()
+            {
+                return mEnableSaveGames;
+            }
+
+            /// <summary>
+            /// Determines whether this instance has Google+ required.
+            /// </summary>
+            /// <returns><c>true</c> if this instance has Google+ required; otherwise, <c>false</c>.</returns>
+            internal bool HasRequireGooglePlus()
+            {
+                return mRequireGooglePlus;
+            }
+
+            /// <summary>
+            /// Gets the match delegate.
+            /// </summary>
+            /// <returns>The match delegate.</returns>
+            internal MatchDelegate GetMatchDelegate()
+            {
+                return mMatchDelegate;
+            }
+
+            /// <summary>
+            /// Gets the invitation delegate.
+            /// </summary>
+            /// <returns>The invitation delegate.</returns>
+            internal InvitationReceivedDelegate GetInvitationDelegate()
+            {
+                return mInvitationDelegate;
+            }
+
+            /// <summary>
+            /// Gets the permission rationale.
+            /// </summary>
+            /// <returns>The permission rationale.</returns>
+            internal string GetPermissionRationale()
+            {
+                return mRationale;
+            }
+        }
+		
+		// <copyright file="SavedGameMetadataUpdate.cs" company="Google Inc.">
+// Copyright (C) 2014 Google Inc.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//  http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//    limitations under the License.
+// </copyright>
+#if (UNITY_ANDROID || (UNITY_IPHONE && !NO_GPGS))
+
+namespace GooglePlayGames.BasicApi.SavedGame
+{
+    using System;
+    using GooglePlayGames.OurUtils;
+
+    /// <summary>
+    /// A struct representing the mutation of saved game metadata. Fields can either have a new value
+    /// or be untouched (in which case the corresponding field in the saved game metadata will be
+    /// untouched). Instances must be built using <see cref="SavedGameMetadataUpdate.Builder"/>
+    /// and once created, these instances are immutable and threadsafe.
+    /// </summary>
+    public struct SavedGameMetadataUpdate
+    {
+        private readonly bool mDescriptionUpdated;
+        private readonly string mNewDescription;
+        private readonly bool mCoverImageUpdated;
+        private readonly byte[] mNewPngCoverImage;
+        private readonly TimeSpan? mNewPlayedTime;
+
+        private SavedGameMetadataUpdate(Builder builder)
+        {
+            mDescriptionUpdated = builder.mDescriptionUpdated;
+            mNewDescription = builder.mNewDescription;
+            mCoverImageUpdated = builder.mCoverImageUpdated;
+            mNewPngCoverImage = builder.mNewPngCoverImage;
+            mNewPlayedTime = builder.mNewPlayedTime;
+        }
+
+        public bool IsDescriptionUpdated
+        {
+            get
+            {
+                return mDescriptionUpdated;
+            }
+        }
+
+        public string UpdatedDescription
+        {
+            get
+            {
+                return mNewDescription;
+            }
+        }
+
+        public bool IsCoverImageUpdated
+        {
+            get
+            {
+                return mCoverImageUpdated;
+            }
+        }
+
+        public byte[] UpdatedPngCoverImage
+        {
+            get
+            {
+                return mNewPngCoverImage;
+            }
+        }
+
+        public bool IsPlayedTimeUpdated
+        {
+            get
+            {
+                return mNewPlayedTime.HasValue;
+            }
+        }
+
+        public TimeSpan? UpdatedPlayedTime
+        {
+            get
+            {
+                return mNewPlayedTime;
+            }
+        }
+
+        public struct Builder
+        {
+            internal bool mDescriptionUpdated;
+            internal string mNewDescription;
+            internal bool mCoverImageUpdated;
+            internal byte[] mNewPngCoverImage;
+            internal TimeSpan? mNewPlayedTime;
+
+            public Builder WithUpdatedDescription(string description)
+            {
+                mNewDescription = Misc.CheckNotNull(description);
+                mDescriptionUpdated = true;
+                return this;
+            }
+
+            public Builder WithUpdatedPngCoverImage(byte[] newPngCoverImage)
+            {
+                mCoverImageUpdated = true;
+                mNewPngCoverImage = newPngCoverImage;
+                return this;
+            }
+
+            public Builder WithUpdatedPlayedTime(TimeSpan newPlayedTime)
+            {
+                if (newPlayedTime.TotalMilliseconds > ulong.MaxValue)
+                {
+                    throw new InvalidOperationException("Timespans longer than ulong.MaxValue " +
+                        "milliseconds are not allowed");
+                }
+
+                mNewPlayedTime = newPlayedTime;
+                return this;
+            }
+
+            public SavedGameMetadataUpdate Build()
+            {
+                return new SavedGameMetadataUpdate(this);
+            }
+        }
+    }
+}
+#endif
+
+
+internal void SetOnMultiplayerInvitationEventCallback(
+            Action<Types.MultiplayerEvent, string, MultiplayerInvitation> callback)
+        {
+            IntPtr callbackPointer = Callbacks.ToIntPtr(callback);
+            C.GameServices_Builder_SetOnMultiplayerInvitationEvent(SelfPtr(),
+                InternalOnMultiplayerInvitationEventCallback, callbackPointer);
+        }
+
+        internal GameServices Build(PlatformConfiguration configRef)
+        {
+            IntPtr pointer = C.GameServices_Builder_Create(SelfPtr(),
+                             HandleRef.ToIntPtr(configRef.AsHandle()));
+
+            if (pointer.Equals(IntPtr.Zero))
+            {
+                // TODO(hsakai): For now, explode noisily. In the actual plugin, this probably
+                // should result in something besides an exception.
+                throw new System.InvalidOperationException("There was an error creating a " +
+                    "GameServices object. Check for log errors from GamesNativeSDK");
+            }
+
+            return new GameServices(pointer);
+        }
