@@ -23,7 +23,6 @@ namespace DataStructures
             return _queue.Dequeue();
         }
 
-       
 
         public IEnumerator<T> GetEnumerator()
         {

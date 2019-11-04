@@ -4,3 +4,6 @@ c:\users\scott\documents\visual studio 2013\Projects\CollectIt\CollectIt\bin\Deb
 c:\users\scott\documents\visual studio 2013\Projects\CollectIt\CollectIt\obj\Debug\CollectIt.csprojResolveAssemblyReference.cache
 c:\users\scott\documents\visual studio 2013\Projects\CollectIt\CollectIt\obj\Debug\CollectIt.exe
 c:\users\scott\documents\visual studio 2013\Projects\CollectIt\CollectIt\obj\Debug\CollectIt.pdb
+C:\Users\Surya\Source\Repos\Code-Snippets\4-csharp-generics-m4-methods-exercise-files\excercises\after\CollectIt\CollectIt\bin\Debug\CollectIt.exe.config
+C:\Users\Surya\Source\Repos\Code-Snippets\4-csharp-generics-m4-methods-exercise-files\excercises\after\CollectIt\CollectIt\obj\Debug\CollectIt.exe
+C:\Users\Surya\Source\Repos\Code-Snippets\4-csharp-generics-m4-methods-exercise-files\excercises\after\CollectIt\CollectIt\obj\Debug\CollectIt.pdb

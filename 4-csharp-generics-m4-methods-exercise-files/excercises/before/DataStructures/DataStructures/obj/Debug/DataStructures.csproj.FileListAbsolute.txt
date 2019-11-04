@@ -4,3 +4,6 @@ C:\Users\Scott\Documents\Visual Studio 2013\Projects\DataStructures\DataStructur
 C:\Users\Scott\Documents\Visual Studio 2013\Projects\DataStructures\DataStructures\obj\Debug\DataStructures.csprojResolveAssemblyReference.cache
 C:\Users\Scott\Documents\Visual Studio 2013\Projects\DataStructures\DataStructures\obj\Debug\DataStructures.exe
 C:\Users\Scott\Documents\Visual Studio 2013\Projects\DataStructures\DataStructures\obj\Debug\DataStructures.pdb
+C:\Users\Surya\Source\Repos\Code-Snippets\4-csharp-generics-m4-methods-exercise-files\excercises\before\DataStructures\DataStructures\bin\Debug\DataStructures.exe.config
+C:\Users\Surya\Source\Repos\Code-Snippets\4-csharp-generics-m4-methods-exercise-files\excercises\before\DataStructures\DataStructures\obj\Debug\DataStructures.exe
+C:\Users\Surya\Source\Repos\Code-Snippets\4-csharp-generics-m4-methods-exercise-files\excercises\before\DataStructures\DataStructures\obj\Debug\DataStructures.pdb

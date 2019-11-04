@@ -1,0 +1,1096 @@
+#include <stdexcept>
+#include <string>
+#include <iostream>
+#include<vector>
+using namespace std;
+
+int main() {
+	vector<int> v1{ 3,3,3,3 };
+	vector<int> v2(5);
+	for (int i : v2) {
+		cout << i;
+	}
+	for (int i : v1) {
+		cout << i;
+	}
+	cout << endl;
+	int a[]{ 12,12,12,12 };
+	vector<int> v3(4,344);
+	for (auto v : v3) {
+		cout << v;
+	}
+	cout << endl;
+	////Loops never ends sinces the last is not set , it will never i will never be more than zero.
+	//for (int i = 0; i < v3.size();) {
+	//	cout << v3.at(i); // at checks the index out of range execptions.f
+	//}
+}
+
+/////////////////////
+Range based for loop in c++ 11
+	for (auto c : "This is a test")
+		if (c == ' ')
+			cout << "\t";
+		else
+			cout << c;
+			
+///////////////////
+//code for generating bad allocation.Example for Exception handling.
+#include <iostream>
+#include <exception>
+
+using namespace std;
+struct myStruct {
+	string name{"ffffffffffffffffffffffffffffffffffffffffffffffffffffffff"};
+	long long num{12};
+};
+class ExceptionExample  {
+	myStruct* mystrct1, *mystrct2, *mystrct3, *mystrct4, *mystrct5;
+public:
+	ExceptionExample() {
+		 mystrct1 = new myStruct[9999999];
+		 mystrct2 = new myStruct[9999999];
+		 mystrct3 = new myStruct[9999999];
+		 mystrct4 = new myStruct[9999999];
+		 mystrct5 = new myStruct[9999999];
+		delete[] mystrct1;
+		delete[] mystrct2;
+		delete[] mystrct3;
+		delete[] mystrct4;
+		delete[] mystrct5;
+	}
+};
+int main() {
+	try {
+		ExceptionExample e;
+	}
+	catch(bad_alloc &e){
+		cout << e.what() << endl;
+	}
+	return 0;
+}
+
+////////////////////////
+// demonstraion of subclass exception and parent class exception . Order of the catch block is important here. Always derived class exception should be in the first palce.
+#include <iostream>
+#include <exception>
+
+using namespace std;
+
+class MyException : public exception {
+public:
+	virtual const char* what() const throw() {
+		// when const throw is mentioned with empty () it means do not throw expetion from this method.
+		return "Bad Allocation Happend";
+	}
+
+};
+struct myStruct {
+	string name{"ffffffffffffffffffffffffffffffffffffffffffffffffffffffff"};
+	long long num{12};
+
+};
+
+class ExceptionExample  {
+	myStruct* mystrct1, *mystrct2, *mystrct3, *mystrct4, *mystrct5;
+public:
+	ExceptionExample() {
+		 mystrct1 = new myStruct[9999999];
+		 mystrct2 = new myStruct[9999999];
+		 mystrct3 = new myStruct[9999999];
+		 mystrct4 = new myStruct[9999999];
+		 mystrct5 = new myStruct[9999999];
+
+		delete[] mystrct1;
+		delete[] mystrct2;
+		delete[] mystrct3;
+		delete[] mystrct4;
+		delete[] mystrct5;
+	}
+};
+int main() {
+	try {
+		ExceptionExample e;
+	}
+	catch(exception &e){
+		cout << "Parent Class " << e.what() << endl;
+	}
+	catch (bad_alloc & e) {
+		cout << "Derived Class " << e.what() << endl;
+	}
+	return 0;
+}
+
+////////////////////////////////
+MAP Container STL
+#include <iostream>
+#include <map>
+
+using namespace std;
+int main() {
+	map<string, int> ages;
+	ages["surya"] = 40;
+	ages["Apan"] = 35;
+	ages["PravarThika"] = 6;
+	ages["shalika"] = 9;
+	// this add the key to the map.  add a default int 0.
+	cout << ages["father"];
+	pair<string, int> mypair("Mother", 78);
+	//since already key father is there it won't add in the map.
+	pair<string, int> mypair2("father", 79);
+	ages.insert(mypair);
+	ages.insert(mypair2);
+	ages.insert(pair<string,int>("self",40));
+	ages.insert(make_pair("Father-In-Law",70));
+
+	for (map<string, int>::iterator it = ages.begin(); it != ages.end();it++) {
+		cout << "name" << it->first << "\t" << "age" << it->second << endl;
+	}
+
+	// To find a key in the map 
+	if (ages.find("Mother") != ages.end()) {
+		cout << "Key Found" << endl;
+	}
+	else {
+		cout << "Key not Found" << endl;
+	}
+	return 0;
+}
+////////////////////////////////////////////////////////
+// Map Associative Container.
+#include <iostream>
+#include <map>
+#include <string>
+using namespace std;
+
+class Person {
+private:
+    string name;
+    int age;
+public:
+    Person() :name(""), age(0) {
+        cout << "Paramterless Constructor is called" << endl;
+    }
+
+    Person(string name, int age) :name(name), age(age) {
+        cout << "Parameter Constructor is called" <<endl;
+    }
+
+    Person(const Person& other) {
+        age = other.age;
+        name = other.name;
+        cout << "Copy Constructor is called" << endl;
+    }
+
+    void Print() const{
+        cout << "name :" << name << "age:" << age << endl;
+    }
+};
+
+using namespace std;
+int main() {
+	map<int, Person> records;
+    //Person person{ "Surya",40 };
+    records[1000] = Person("Surya",40);
+	//ages["surya"] = 40;
+	//ages["Apan"] = 35;
+	//ages["PravarThika"] = 6;
+	//ages["shalika"] = 9;
+	//// this add the key to the map.  add a default int 0.
+	//cout << ages["father"];
+	pair<int,Person> mypair(2000,Person("Mother",75));
+	////since already key father is there it won't add in the map.
+	//pair<string, int> mypair2("father", 79);
+	records.insert(mypair);
+	//ages.insert(mypair2);
+    // Same key is not allowed in Map DS.
+	records.insert(make_pair(3000, Person("Apan", 35)));
+	//ages.insert(make_pair("Father-In-Law",70));
+
+	for (map<int, Person>::iterator it = records.begin(); it != records.end();it++) {
+         it->second.Print();
+	}
+	//// To find a key in the map 
+	//if (ages.find("Mother") != ages.end()) {
+	//	cout << "Key Found" << endl;
+	//}
+	//else {
+	//	cout << "Key not Found" << endl;
+	//}
+	return 0;
+}
+
+//////
+// Map Associative Container.
+#include <iostream>
+#include <map>
+#include <string>
+using namespace std;
+
+class Person {
+private:
+    string name;
+    int age;
+public:
+    Person() :name(""), age(0) {
+        cout << "Paramterless Constructor is called" << endl;
+    }
+
+    Person(string name, int age) :name(name), age(age) {
+        cout << "Parameter Constructor is called" <<endl;
+    }
+
+    Person(const Person& other) {
+        age = other.age;
+        name = other.name;
+        cout << "Copy Constructor is called" << endl;
+    }
+    bool operator < (const Person &other) const {
+        // this will accomodate the Person Object with same name but different age.
+        if (name == other.name) {
+            return age < other.age;
+        }
+        else
+        {
+            return name < other.name;
+        }
+    }
+
+    void Print() const{
+        cout << "name :" << name << "age:" << age << endl;
+    }
+};
+
+using namespace std;
+int main() {
+    // Map sort the pair it stores , since Person is a class , map by itself does not know how to sort the person class .
+    // Hence we need to provide a operator < overloding to the person class.
+	map<Person, int> records;
+    records[Person("Surya", 40)] = 1000;
+	//// this add the key to the map.  add a default int 0.
+	//cout << ages["father"];
+	pair<Person,int> mypair(Person("Mother",75),3000);
+	records.insert(mypair);
+    // Same key is not allowed in Map DS.
+	records.insert(make_pair(Person("Apan", 35),2000));
+    records.insert(make_pair(Person("Father", 76), 2000));
+    //This record won't be inserted since Person with name Father is already there operator < will reject adding this to the map.
+    //But the value only get updated.
+    //if you want Father Person to be added consdier change the age and change the operator < overloading method with age comparision .
+
+    records.insert(make_pair(Person("Father", 77), 3000));
+	//ages.insert(make_pair("Father-In-Law",70));
+	for (map<Person, int>::iterator it = records.begin(); it != records.end();it++) {
+         it->first.Print();
+         cout << it->second;
+	}
+	//// To find a key in the map 
+	//if (ages.find("Mother") != ages.end()) {
+	//	cout << "Key Found" << endl;
+	//}
+	//else {
+	//	cout << "Key not Found" << endl;
+	//}
+	return 0;
+}
+
+////////////////////////
+// Assingment Operator
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person {
+private:
+    string name;
+    int age;
+public:
+    Person() :name(""), age(0) {
+        cout << "Paramterless Constructor is called" << endl;
+    }
+
+    Person(string name, int age) :name(name), age(age) {
+        cout << "Parameter Constructor is called" <<endl;
+    }
+
+    Person(const Person& other) {
+        age = other.age;
+        name = other.name;
+        cout << "Copy Constructor is called" << endl;
+    }
+
+   const Person &operator= (const Person &other){
+       cout << "Assingment is called" << endl;
+       age = other.age;
+       name = other.name;
+       return *this;
+    }
+
+    // always first argument to any member method is the [this] operator.
+    void Print() const{
+        cout << "name :" << name << "age:" << age << endl;
+    }
+};
+
+using namespace std;
+int main() {
+    Person person1,person2("Surya",40),person3("Apan" ,35);
+    person1.Print();
+    //person1 = person2;
+    // the default operator call on the class person.Shallow copy.
+    //person1.operator= (person2);
+    //person2 = person3;
+    //person2.Print();
+    // Operator= won't be called , but copy constructor will get called.
+    // Copy Intialization.
+    Person person4 = person3;
+    person4.Print();
+	return 0;
+}
+//////////////////
+// Left shit  Operator
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person {
+private:
+    string name;
+    int age;
+public:
+    Person() :name(""), age(0) {
+        cout << "Paramterless Constructor is called" << endl;
+    }
+
+    Person(string name, int age) :name(name), age(age) {
+        cout << "Parameter Constructor is called" <<endl;
+    }
+
+
+   const Person &operator= (const Person &other){
+       cout << "Assingment is called" << endl;
+       age = other.age;
+       name = other.name;
+       return *this;
+    }
+
+    // always first argument to any member method is the [this] operator.
+    void Print() const{
+        cout << "name :" << name << "age:" << age << endl;
+    }
+    // since we need to access the private member we are using friend . else we could use the getter method.
+   friend ostream &operator<<(ostream &out, const Person &other) {
+       out << other.name << other.age; 
+       return out;
+    }
+};
+// + is having right associative int x = 1 + 2+ 3 , first 2+ 3 will add then it adds 1.
+// left shift having left to right associative.
+
+using namespace std;
+int main() {
+    Person person1,person2("Surya",40),person3("Apan" ,35);
+    //person1.Print();
+    Person person4 = person3;
+    //person4.Print();
+    // instead of having print in the class how about overloading the left shift operator.
+    cout << person4 << endl;
+    // left to right associative. 
+    cout << person4 <<  person2 << endl;
+    // for the above statement to work we have to overload the operator <<
+	return 0;
+}
+
+//////////////////
+// Complex Number in C++
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Complex {
+private:
+    double real;
+    double imaginary;
+public:
+    Complex() : real(0), imaginary(0) {
+        cout << "Paramterless Constructor is called" << endl;
+    }
+
+    Complex(double real,double imaginary) : real(real),imaginary(imaginary)
+    {
+        cout << "Paramter Constructor is called" << endl;
+    }
+
+    Complex(const Complex &other) {
+        real = other.real;
+        imaginary = other.imaginary;
+        cout << "Copy" << endl;
+    }
+
+    const Complex& operator= (const Complex &other){
+        real = other.real;
+        imaginary = other.imaginary;
+        return *this; 
+    }
+    double getReal() const{
+        return real;
+    }
+    double getImaginary() const {
+        return imaginary;
+    }
+ 
+};
+
+ostream& operator<< (ostream& out, const Complex& other) {
+    out << other.getReal() << ":" << other.getImaginary();
+    return out;
+}
+
+
+// + is having right associative int x = 1 + 2+ 3 , first 2+ 3 will add then it adds 1.
+// left shift having left to right associative.
+
+using namespace std;
+int main() {
+    Complex c1(10,20);
+    Complex c2(12,2);
+    Complex c3 = c2;
+    cout << c3 << c1;
+	return 0;
+}
+////////////////////
+// Complex Number in C++ continued 2
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Complex {
+private:
+    double real;
+    double imaginary;
+public:
+    Complex() : real(0), imaginary(0) {
+        cout << "Paramterless Constructor is called" << endl;
+    }
+
+    Complex(double real,double imaginary) : real(real),imaginary(imaginary)
+    {
+        cout << "Paramter Constructor is called" << endl;
+    }
+
+    Complex(const Complex &other) {
+        real = other.real;
+        imaginary = other.imaginary;
+        cout << "Copy" << endl;
+    }
+
+    const Complex& operator= (const Complex &other){
+        real = other.real;
+        imaginary = other.imaginary;
+        return *this; 
+    }
+    double getReal() const{
+        return real;
+    }
+    double getImaginary() const {
+        return imaginary;
+    }
+ 
+};
+
+ostream& operator<< (ostream& out, const Complex& other) {
+    out << other.getReal() << ":" << other.getImaginary();
+    return out;
+}
+
+Complex operator+(const Complex &c1,const Complex &c2) {
+    return Complex(c1.getReal() + c2.getReal() ,c1.getImaginary() + c2.getImaginary());
+}
+
+
+// + is having right associative int x = 1 + 2+ 3 , first 2+ 3 will add then it adds 1.
+// left shift having left to right associative.
+
+using namespace std;
+int main() {
+    Complex c1(10,20);
+    Complex c2(12,72);
+    Complex c3 = c2;
+    //cout << c3 << c1;
+    cout << c3 + c1 + c2;
+	return 0;
+}
+
+//////
+// Complex Number in C++ continue 3
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Complex {
+private:
+    double real;
+    double imaginary;
+public:
+    Complex() : real(0), imaginary(0) {
+        cout << "Paramterless Constructor is called" << endl;
+    }
+
+    Complex(double real,double imaginary) : real(real),imaginary(imaginary)
+    {
+        cout << "Paramter Constructor is called" << endl;
+    }
+
+    Complex(const Complex &other) {
+        real = other.real;
+        imaginary = other.imaginary;
+        cout << "Copy" << endl;
+    }
+
+    const Complex& operator= (const Complex &other){
+        real = other.real;
+        imaginary = other.imaginary;
+        return *this; 
+    }
+    double getReal() const{
+        return real;
+    }
+    double getImaginary() const {
+        return imaginary;
+    }
+ 
+};
+
+ostream& operator<< (ostream& out, const Complex& other) {
+    out << other.getReal() << ":" << other.getImaginary();
+    return out;
+}
+
+Complex operator+(const Complex &c1,const Complex &c2) {
+    return Complex(c1.getReal() + c2.getReal() ,c1.getImaginary() + c2.getImaginary());
+}
+
+Complex operator+(const Complex& c1, double r) {
+    return Complex(c1.getReal() + r, c1.getImaginary() );
+}
+
+// + is having right associative int x = 1 + 2+ 3 , first 2+ 3 will add then it adds 1.
+// left shift having left to right associative.
+
+using namespace std;
+int main() {
+    Complex c1(10,20);
+    Complex c2(12,72);
+    Complex c3 = c2 + 100;
+    // this statement wont work since the + operator , first arg is double and second is complex 
+    // but in our operator overloading we have complex as first arg and double as the second arg.
+    //Complex c3 =  100 + c2;
+    //cout << c3 << c1;
+    cout << c3;
+	return 0;
+}
+
+//////////////////////////
+// Function Pointer
+#include <iostream>
+#include <string>
+using namespace std;
+
+bool Test(string name , bool flag) {
+    cout << name <<"\t awsome programmer : " << flag << endl;
+    return flag;
+}
+
+using namespace std;
+int main() {
+    //void (*funcPointer)() = Test;
+    bool(*funcPointerString)(string,bool) = Test;
+       bool temp = funcPointerString("Surya",true);
+       cout << temp;
+	return 0;
+}
+///////////////
+Copy Construtor and order of the construtor called, Object slicing.
+// to avoid object being sliced , use pass by reference or by pointer.
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Parent {
+private: 
+    int one;
+public:
+    Parent():one(0) {
+        cout << "Parent Constructor\n";
+    }
+
+    virtual void Print() {
+        cout << "Parent Print\n" << endl;
+    }
+
+    Parent(const Parent &other) {
+        cout << "Parent Copy Constructor\n" << endl;
+        one = other.one;
+    }
+
+    virtual ~Parent() {
+        cout << "Parent Destructor\n";
+    }
+};
+
+class Child : public Parent {
+private : 
+    int two;
+public :
+    Child():two(0) {
+        cout << "Child Constructor\n";
+    }
+    void Print() {
+        cout << "Child Print\n" << endl;
+    }
+    ~Child() {
+        cout << "Child Destructor\n";
+    }
+    
+};
+
+int main() {
+    Child c1;
+    Parent &p1 = c1;
+    // try removing the virtual key word in the parent.
+    p1.Print();
+    // Parent Copy Constructor is get called. Copy Initialization.
+    Parent p2 = Child(); //Object Slicing.
+    p2.Print();
+	return 0;
+}
+///////////////////////
+Pure Virtual Methods , Abstract class.
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Parent {
+private: 
+    int one;
+public:
+    Parent():one(0) {
+        cout << "Parent Constructor\n";
+    }
+    virtual void Print() = 0;
+    virtual void Display() = 0;
+};
+
+class Child : public Parent {
+private : 
+    int two;
+public :
+    Child() {
+        cout << "Child Constructor\n";
+    }
+
+    virtual void Print() {
+        cout << "Hello";
+    }
+};
+
+int main() {
+    Child c;
+    c.Print();
+	return 0;
+}
+
+/////////////
+Abstract Class and Run time polymorphism. With Deep Hierachy.
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Parent {
+private: 
+    int one;
+public:
+    Parent():one(0) {
+        cout << "Parent Constructor\n";
+    }
+    virtual void Print() = 0;
+    virtual void Display() = 0;
+};
+
+class FirstChild : public Parent {
+    private: 
+    int two;
+public :
+    FirstChild() {
+        cout << "FirstChild Constructor\n";
+    }
+
+    virtual void Print() {
+        cout << "Hello FirstChild";
+    }
+};
+
+class SecondChild : public FirstChild {
+private:
+    int three;
+public:
+    SecondChild() {
+        cout << "SecondChild Constructor\n";
+    }
+
+    virtual void Display() {
+        cout << "Display in the Second child";
+    }
+};
+
+int main() {
+    // Compile time error since pure virtual function. Display not imPlemented.
+    // Only second child is allowed to instantiate.
+    // FirstChild f;
+    // Array of second child invoke constructor of the class.
+    // Infact array of any class will invoke its own class constructor.
+    SecondChild s[5];
+    s[0].Print();
+
+    Parent* ParentPointer[5];
+    ParentPointer[0] = &s[0];
+    ParentPointer[0]->Display();
+	return 0;
+}
+
+////////////////////////
+Moden C++ Auto,dectype
+#include <iostream>
+#include <string>
+#include<typeinfo>
+
+using namespace std;
+class Parent {
+private:
+    int one;
+public:
+    Parent() :one(0) {
+        cout << "Parent Constructor\n";
+    }
+};
+
+template<typename T, typename U>
+auto Sum(T t,U u) -> decltype(u){
+    return t + u;
+}
+
+int main() {
+    Parent p;
+    string val;
+    auto v = "sfsfd";
+    cout << typeid(v).name();
+    //string name = "Surya";
+    decltype(val) name = "Surya";
+    //cout << name;
+    cout << Sum(10,"Narayanan");
+    //cout << MyMethod();
+	return 0;
+}
+
+////////////////////
+Auto and nested class. Bad way of doing the nested class.
+#include <iostream>
+#include<typeinfo>
+
+using namespace std;
+
+class Ring {
+public:
+    Ring() {
+    }
+    virtual ~Ring() {
+    }
+    class Iterator {
+    public:
+        Iterator() {
+        }
+        void Print() {
+            cout << "Iterator";
+        }
+    };
+};
+int main() {
+    const char* names[] = { "one","two","three" };
+    auto names2 = {"one","two","three"};
+    for (auto text: names2) {
+        cout << text;
+    }
+
+    Ring::Iterator it;
+    it.Print();
+	return 0;
+}
+
+///////////////////
+Auto and nested class. Better way of doing the nested class.
+#include <iostream>
+#include<typeinfo>
+
+using namespace std;
+
+class Ring {
+public:
+    Ring() {
+    }
+    virtual ~Ring() {
+    }
+    class Iterator;
+};
+
+class Ring::Iterator {
+public:
+    Iterator() {
+    }
+    void Print() {
+        cout << "Iterator";
+    }
+};
+int main() {
+    const char* names[] = { "one","two","three" };
+    auto names2 = {"one","two","three"};
+    for (auto text: names2) {
+        cout << text;
+    }
+
+    Ring::Iterator it;
+    it.Print();
+	return 0;
+}
+///////////
+#include <iostream>
+#include<typeinfo>
+
+using namespace std;
+template<typename T>
+class Ring {
+public:
+    Ring() {
+    }
+    virtual ~Ring() {
+    }
+    class Iterator;
+};
+
+template<typename T>
+class Ring<T>::Iterator {
+public:
+    Iterator() {
+    }
+    void Print() {
+        cout << "Iterator" << T();
+    }
+};
+int main() {
+    const char* names[] = { "one","two","three" };
+    auto names2 = {"one","two","three"};
+    for (auto text: names2) {
+        cout << text;
+    }
+
+    Ring<int>::Iterator it;
+    //Default intializing of int is 0.
+    it.Print();
+	return 0;
+}
+////
+Intialization in c++ 98
+#include <iostream>
+#include<typeinfo>
+
+using namespace std;
+struct employee {
+    string name;
+    int t;
+
+}e1 = { "asdfsdf", 90 }, e2 = {"sdfsdf", 90};
+
+int main() {
+    employee e = { "Surya" , 10 };
+    cout << e1.name;
+	return 0;
+}
+//////////
+#include <iostream>
+#include<typeinfo>
+#include <initializer_list>
+using namespace std;
+class Employee {
+public:
+    Employee(initializer_list<string> names) {
+        for (auto s : names) {
+            cout << s << "\t";
+        }
+    }
+
+    void Print(initializer_list<string> l) {
+        for (auto k : l) {
+            cout << k << "\t";
+        }
+    }
+};
+
+
+
+int main() {
+    Employee e{ "one","two","three","four" };
+    e.Print({"five","six","seven"});
+	return 0;
+}
+///////////////////
+Default Initalizing Objects.
+#include <iostream>
+#include<typeinfo>
+#include <initializer_list>
+using namespace std;
+
+class Employee {
+    int age{ 10 };
+    int salary = 1000;
+    string typeOfEmployment{ "direct" };
+public:
+    Employee() = default;
+    Employee(const Employee &other) = default;
+   Employee &operator=(const Employee &other) = delete;
+
+    Employee(int age):age(age) {
+    }
+
+    void Print() {
+        cout << typeOfEmployment << age << "\t" << salary << endl;
+ }
+};
+
+int main() {
+    Employee e;
+    e.Print();
+    cout << endl;
+    // this over rides the default value. of the age member.
+    Employee e2(40);
+    Employee e3 = e2;
+    e3.Print();
+	return 0;
+}			
+///////////
+Lambda Expression Part1
+#include <iostream>
+using namespace std;
+void FunctionPointerUsingLambda(void (*PointerToFunc)()) {
+    PointerToFunc();
+}
+int main() {
+    auto LambdaExpression = []() {cout << "Lambda Expression" << endl; };
+    //func();
+     //[]() {cout << "Lambda Expression" << endl; }();
+     //FunctionPointerUsingLambda(LambdaExpression);
+     FunctionPointerUsingLambda([]() {cout << "Lambda Expression" << endl; });
+
+	return 0;
+}
+//////////////
+#include <iostream>
+using namespace std;
+void FunctionPointerUsingLambda(void (*PointerToFunc)()) {
+    PointerToFunc();
+}
+
+void LambdaWithArguments(void(*pointerFunc)(string)) {
+    pointerFunc("Mother");
+}
+
+void LambdaWithArugAndReturnType(double (*pointFunc)(double a, double b)) {
+    auto rval =  pointFunc(100.2,34);
+    cout << rval;
+}
+
+int main() {
+    auto LambdaExpression = []() {cout << "Lambda Expression" << endl; };
+    //func();
+     //[]() {cout << "Lambda Expression" << endl; }();
+     //FunctionPointerUsingLambda(LambdaExpression);
+     FunctionPointerUsingLambda([]() {cout << "Lambda Expression" << endl; });
+
+     auto Lambda2 = [](string name) {cout << "Hello" << name; };
+     Lambda2("Surya");
+     LambdaWithArguments(Lambda2);
+     auto Lambda3 = [](double a, double b) -> double {
+         if (b == 0) {
+             return 0;
+         }
+         else
+         {
+             return  a / b;
+         }
+         };
+     cout << endl;
+     cout << Lambda3(12.0, 0);
+     cout << endl;
+     LambdaWithArugAndReturnType(Lambda3);
+	return 0;
+}
+////////////////////
+Capture Local Variables in Lambda expressions
+#include <iostream>
+using namespace std;
+void FunctionPointerUsingLambda(void (*PointerToFunc)()) {
+    PointerToFunc();
+}
+
+void LambdaWithArguments(void(*pointerFunc)(string)) {
+    pointerFunc("Mother");
+}
+
+void LambdaWithArugAndReturnType(double (*pointFunc)(double a, double b)) {
+    auto rval =  pointFunc(100.2,34);
+    cout << rval;
+}
+
+int main() {
+    int age{40};
+    string name{"Suryanarayanan"};
+    float salary{ 100000.0 };
+    auto LambdaExpression = []() {cout << "Lambda Expression" << endl; };
+    //func();
+     //[]() {cout << "Lambda Expression" << endl; }();
+     //FunctionPointerUsingLambda(LambdaExpression);
+     FunctionPointerUsingLambda([]() {cout << "Lambda Expression" << endl; });
+
+     auto Lambda2 = [](string name) {cout << "Hello" << name; };
+     Lambda2("Surya");
+     LambdaWithArguments(Lambda2);
+     auto Lambda3 = [](double a, double b) -> double {
+         if (b == 0) {
+             return 0;
+         }
+         else
+         {
+             return  a / b;
+         }
+         };
+     cout << endl;
+     cout << Lambda3(12.0, 0);
+     cout << endl;
+     LambdaWithArugAndReturnType(Lambda3);
+     cout << "@@@@@@@@@@@" << endl;
+     //Acpturing the local varliables in lambda expressions
+     [age, name]() { cout << "Name:" << name << "Age:" << age << endl; }();
+     cout << "@@@@@@@@@@@" << endl;
+     // Capture all the variables as value.
+     [=]() {cout << "Name:" << name << "Age:" << age << endl; }();
+     cout << "@@@@@@@@@@@" << endl;
+     //Capture all the local variables as reference.
+     [&]     ()     {
+         name = "Mother";
+         cout << "Name:" << name << "Age:" << age << endl; 
+     }  ();
+     [=,&salary]() {         salary = 1500000;
+     cout << "Name:" << name << "Age:" << age <<"\tSalary:\t" << salary << endl; }();
+	 //use this operator to capture the member variable in class. all the member variable will be reference type only.
+	      [this]() {         salary = 1500000;
+     cout << "Name:" << name << "Age:" << age <<"\tSalary:\t" << salary << endl; }();
+	return 0;
+}
