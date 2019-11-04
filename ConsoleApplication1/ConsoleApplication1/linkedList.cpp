@@ -136,12 +136,6 @@ public:
             }
         }
     }
-
- 
-
-    void AddAtSortedList( int val) {
-
-    }
 };
 
 int main() {
@@ -154,12 +148,8 @@ int main() {
     list->addAtIndex(0, 22);
     list->addAtIndex(6, 55);
     list->addAtIndex(2, 33);
-    list->deleteAtIndex(6); //12:14 @end 13:00 took 45 mins. all test cases. head , tail , index.
-    //5,4,33,3,2,1,55
+    list->deleteAtIndex(6);
     list->displayList();
     //list->addAtIndex(8, 55);
-
-    //list->AddAtSortedList(66);
-    //cout << "Get\t" << list->getValueAtIndex(3);
     return 0;
 }
