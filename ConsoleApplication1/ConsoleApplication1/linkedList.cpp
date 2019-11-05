@@ -59,20 +59,29 @@ public:
         return current;
     }
 
-    void addAtTail(int val) {
+    void addAtTail(int val,bool loop = false,int toIndex = -1) {
         //cout << "Tail is called\t" << val <<"\t";
         // traverse to the last node and insert the new Node.
         Node* temp = head;
+        Node* loopNode = nullptr;
         int localCount = 0;
         // Important count - 1.
         while (localCount < count - 1) {
             temp = temp->next;
+            if (toIndex == localCount)
+            {
+                loopNode = temp;
+            }
             localCount++;
         }
         Node* temp1 = new Node(val);
         temp->next = temp1;
+        if (loop) {
+            temp1->next = loopNode;
+        }
         count++;
     }
+
 
     void addAtIndex(int index,int val) {
         if (index > count) {
@@ -127,13 +136,42 @@ public:
         }
     }
 
-    void displayList() {
-        if (head != nullptr) {
-            Node* temp = head;
-            while (temp != nullptr) {
-                cout << temp->val << "\t";
-                temp = temp->next;
+    bool HasLoop() {
+        //using two pointer technique .
+        Node* fast = head;
+        Node* slow = head;
+        // need to check all three conditions since fast->next should not be a null .
+        // so that nullptr->next won't happen. at run time.
+        while (fast != nullptr && slow != nullptr && fast->next != nullptr) {
+            // keep moving .
+            fast = fast->next->next;
+            slow = slow->next; 
+            if (fast == slow) {
+                return true;
             }
+        }
+        return false;
+    }
+
+    void displayList() {
+        //if (head != nullptr) {
+        //    Node* temp = head;
+        //    while (temp != nullptr) {
+        //        cout << temp->val << "\t";
+        //        temp = temp->next;
+        //    }
+        //}
+        if (head != nullptr) {
+            int localCount = 0;
+            Node* temp = head;
+            while (localCount < count) {
+                temp = temp->next;
+                localCount++;
+                cout << temp->val << "\t";
+            }
+        }
+        else {
+            cout << "Empty list" << endl;
         }
     }
 };
@@ -146,10 +184,13 @@ int main() {
     list->addAtHead(4); 
     list->addAtHead(5);
     list->addAtIndex(0, 22);
-    list->addAtIndex(6, 55);
     list->addAtIndex(2, 33);
-    list->deleteAtIndex(6);
-    list->displayList();
+    // this calls the addAtTail.
+    list->addAtIndex(7, 55);
+    list->addAtTail(99,true,2);
+    //list->displayList();
+    cout << endl;
+    cout << "List has loop:\t" << list->HasLoop();
     //list->addAtIndex(8, 55);
     return 0;
 }
