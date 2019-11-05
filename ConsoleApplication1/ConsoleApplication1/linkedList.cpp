@@ -152,6 +152,35 @@ public:
         }
         return false;
     }
+    // return the node that is connected to .
+    Node* DetectCycle() {
+        // Do the floyd's two pointer technique 
+        // Once found there exsist loop then place the  
+        // Slow pointer to the head position.
+        // move the slow and fast pointer at the same speed.
+        // return the slow pointer . that is the start node of the loop.
+        Node* fast = head;
+        Node* slow = head;
+        while (fast != nullptr && slow != nullptr && fast->next != nullptr) {
+            fast = fast->next->next;
+            slow = slow->next;
+            if (fast == slow) {
+                // loop found
+                break;
+            }
+        }
+        // case if there is no loop
+        if (fast != slow) {
+            return nullptr;
+        }
+        // place the slow at head;
+        slow = head;
+        while (slow != fast) {
+            slow = slow->next;
+            fast = fast->next;
+        }
+        return slow;
+    }
 
     void displayList() {
         //if (head != nullptr) {
@@ -188,6 +217,7 @@ int main() {
     // this calls the addAtTail.
     list->addAtIndex(7, 55);
     list->addAtTail(99,true,2);
+    cout << list->DetectCycle()->val << endl;
     //list->displayList();
     cout << endl;
     cout << "List has loop:\t" << list->HasLoop();
