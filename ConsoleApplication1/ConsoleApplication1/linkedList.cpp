@@ -175,11 +175,15 @@ public:
         }
         // place the slow at head;
         slow = head;
+
         while (slow != fast) {
             slow = slow->next;
             fast = fast->next;
         }
-        return slow;
+        // failed in two case . 
+        // 1) if there are only two elements thata are looped.
+        // 2) if there is one and only element it returns the first element.expected it should not return the element.
+            return slow;
     }
 
     void displayList() {
@@ -216,9 +220,9 @@ int main() {
     list->addAtIndex(2, 33);
     // this calls the addAtTail.
     list->addAtIndex(7, 55);
-    list->addAtTail(99,true,2);
+    list->addAtTail(99,true,0);
     cout << list->DetectCycle()->val << endl;
-    //list->displayList();
+    list->displayList();
     cout << endl;
     cout << "List has loop:\t" << list->HasLoop();
     //list->addAtIndex(8, 55);
