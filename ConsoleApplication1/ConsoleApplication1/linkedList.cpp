@@ -1,4 +1,5 @@
 #include<iostream>
+#include<cstdlib>
 using namespace std;
 
 struct Node {
@@ -211,6 +212,8 @@ public:
 
 int main() {
     MyLinkedList*  list = new MyLinkedList();
+    MyLinkedList* list2 = new MyLinkedList();
+
     list->addAtHead(1);
     list->addAtHead(2);
     list->addAtHead(3);
@@ -218,13 +221,9 @@ int main() {
     list->addAtHead(5);
     list->addAtIndex(0, 22);
     list->addAtIndex(2, 33);
-    // this calls the addAtTail.
     list->addAtIndex(7, 55);
-    list->addAtTail(99,true,0);
-    cout << list->DetectCycle()->val << endl;
     list->displayList();
+    // list is a non loop .
     cout << endl;
-    cout << "List has loop:\t" << list->HasLoop();
-    //list->addAtIndex(8, 55);
     return 0;
 }
