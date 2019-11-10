@@ -25,11 +25,10 @@ public:
         // removing the head node.
         if (count == length - n) {
             //remove head
-            if (head->next)
-                head = head->next;
-            else
-                head = nullptr;
-
+        if (head->next)
+            head = head->next;
+        else
+            head = nullptr;
         }
         else {
             while (count < length - n) {
@@ -46,7 +45,6 @@ public:
                 previousNode->next = nullptr;
             }
         }
-
         return head;
     }
 };
