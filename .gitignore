@@ -22,3 +22,5 @@
 /.vs/ProjectSettings.json
 /.vs/Code-Snippets/v16/Browse.VC.opendb
 /.vs/Code-Snippets/v16/Browse.VC.db
+*.json
+*.suo
