@@ -7,6 +7,9 @@
  *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
  * };
  */
+#include<vector>
+#include<stack>
+using namespace std;
 class Solution {
 public:
     vector<int> inorderTraversal(TreeNode* root) {
