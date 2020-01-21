@@ -1,0 +1,396 @@
+#include <stdexcept>
+#include <string>
+#include <iostream>
+#include<vector>
+using namespace std;
+
+
+int main() {
+    vector<int> v1{ 3,3,3,3 };
+    vector<int> v2(5);
+    for (int i : v2) {
+        cout << i;
+    }
+    cout << endl;
+
+    for (int i : v1) {
+        cout << i;
+    }
+    cout << endl;
+    int a[]{ 12,12,12,12 };
+    vector<int> v3(4, 344);
+    //C++ 11 feature auto Range.
+    for (auto v : v3) {
+        cout << v;
+    }
+    cout << endl;
+    //Loops never ends sinces the last is not set , 
+    //it will never i will never be more than zero.
+    for (int i = 0; i < v3.size();/*i++*/ /* comment his out for infinite loop*/) {
+    	cout << v3.at(i); // at checks the index out of range execptions.f
+    }
+}
+
+
+
+/////////////////////
+Range based for loop in c++ 11
+	for (auto c : "This is a test")
+		if (c == ' ')
+			cout << "\t";
+		else
+			cout << c;
+			
+///////////////////
+//code for generating bad allocation.Example for Exception handling.
+#include <iostream>
+#include <exception>
+
+using namespace std;
+struct myStruct {
+	string name{"ffffffffffffffffffffffffffffffffffffffffffffffffffffffff"};
+	long long num{12};
+};
+class ExceptionExample  {
+	myStruct* mystrct1, *mystrct2, *mystrct3, *mystrct4, *mystrct5;
+public:
+	ExceptionExample() {
+		 mystrct1 = new myStruct[9999999];
+		 mystrct2 = new myStruct[9999999];
+		 mystrct3 = new myStruct[9999999];
+		 mystrct4 = new myStruct[9999999];
+		 mystrct5 = new myStruct[9999999];
+		delete[] mystrct1;
+		delete[] mystrct2;
+		delete[] mystrct3;
+		delete[] mystrct4;
+		delete[] mystrct5;
+	}
+};
+int main() {
+	try {
+		ExceptionExample e;
+	}
+	catch(bad_alloc &e){
+		cout << e.what() << endl;
+	}
+	return 0;
+}
+
+////////////////////////
+// demonstraion of subclass exception and parent class exception . 
+//Order of the catch block is important here. Always derived class exception should be in the first palce.
+#include <iostream>
+#include <exception>
+
+using namespace std;
+
+class MyException : public exception {
+public:
+	virtual const char* what() const throw() {
+		// when const throw is mentioned with empty () it means do not throw expetion from this method.
+		return "Bad Allocation Happend";
+	}
+
+};
+struct myStruct {
+	string name{"ffffffffffffffffffffffffffffffffffffffffffffffffffffffff"};
+	long long num{12};
+
+};
+
+class ExceptionExample  {
+	myStruct* mystrct1, *mystrct2, *mystrct3, *mystrct4, *mystrct5;
+public:
+	ExceptionExample() {
+		 mystrct1 = new myStruct[9999999];
+		 mystrct2 = new myStruct[9999999];
+		 mystrct3 = new myStruct[9999999];
+		 mystrct4 = new myStruct[9999999];
+		 mystrct5 = new myStruct[9999999];
+
+		delete[] mystrct1;
+		delete[] mystrct2;
+		delete[] mystrct3;
+		delete[] mystrct4;
+		delete[] mystrct5;
+	}
+};
+int main() {
+	try {
+		ExceptionExample e;
+	}
+	catch(exception &e){
+		cout << "Parent Class " << e.what() << endl;
+	}
+	catch (bad_alloc & e) {
+		cout << "Derived Class " << e.what() << endl;
+	}
+	return 0;
+}
+
+////////////////////////////////
+MAP Container STL
+#include <iostream>
+#include <map>
+
+using namespace std;
+int main() {
+	map<string, int> ages;
+	ages["surya"] = 40;
+	ages["Apan"] = 35;
+	ages["PravarThika"] = 6;
+	ages["shalika"] = 9;
+	// this add the key to the map.  add a default int 0.
+	cout << ages["father"];
+	pair<string, int> mypair("Mother", 78);
+	//since already key father is there it won't add in the map.
+	pair<string, int> mypair2("father", 79);
+	ages.insert(mypair);
+	ages.insert(mypair2);
+	ages.insert(pair<string,int>("self",40));
+	ages.insert(make_pair("Father-In-Law",70));
+
+	for (map<string, int>::iterator it = ages.begin(); it != ages.end();it++) {
+		cout << "name" << it->first << "\t" << "age" << it->second << endl;
+	}
+
+	// To find a key in the map 
+	if (ages.find("Mother") != ages.end()) {
+		cout << "Key Found" << endl;
+	}
+	else {
+		cout << "Key not Found" << endl;
+	}
+	return 0;
+}
+////////////////////////////////////////////////////////
+// Map Associative Container.
+#include <iostream>
+#include <map>
+#include <string>
+using namespace std;
+
+class Person {
+private:
+    string name;
+    int age;
+public:
+    Person() :name(""), age(0) {
+        cout << "Paramterless Constructor is called" << endl;
+    }
+
+    Person(string name, int age) :name(name), age(age) {
+        cout << "Parameter Constructor is called" <<endl;
+    }
+
+    Person(const Person& other) {
+        age = other.age;
+        name = other.name;
+        cout << "Copy Constructor is called" << endl;
+    }
+
+    void Print() const{
+        cout << "name :" << name << "age:" << age << endl;
+    }
+};
+
+using namespace std;
+int main() {
+	map<int, Person> records;
+    //Person person{ "Surya",40 };
+    records[1000] = Person("Surya",40);
+	pair<int,Person> mypair(2000,Person("Mother",75));
+	
+	records.insert(mypair);
+
+    // Same key is not allowed in Map DS.
+	records.insert(make_pair(3000, Person("Apan", 35)));
+	//ages.insert(make_pair("Father-In-Law",70));
+
+	for (map<int, Person>::iterator it = records.begin(); it != records.end();it++) {
+         it->second.Print();
+	}
+	//// To find a key in the map 
+	//if (ages.find("Mother") != ages.end()) {
+	//	cout << "Key Found" << endl;
+	//}
+	//else {
+	//	cout << "Key not Found" << endl;
+	//}
+	return 0;
+}
+
+//////
+// Map Associative Container.
+#include <iostream>
+#include <map>
+#include <string>
+using namespace std;
+
+class Person {
+private:
+    string name;
+    int age;
+public:
+    Person() :name(""), age(0) {
+        cout << "Paramterless Constructor is called" << endl;
+    }
+
+    Person(string name, int age) :name(name), age(age) {
+        cout << "Parameter Constructor is called" << endl;
+    }
+
+    Person(const Person& other) {
+        age = other.age;
+        name = other.name;
+        cout << "Copy Constructor is called" << endl;
+    }
+
+    bool operator < (const Person& other) const {
+        // this will accomodate the Person Object with same name but different age.
+        if (name == other.name) {
+            return age < other.age;
+        }
+        else
+        {
+            return name < other.name;
+        }
+    }
+
+    void Print() const {
+        cout << "name :" << name << "age:" << age << endl;
+    }
+};
+
+using namespace std;
+int main() {
+    // Map sort the pair it stores , since Person is a class , map by itself does not know how to sort the person class .
+    // Hence we need to provide a operator < overloding to the person class.
+    map<Person, int> records;
+    records[Person("Surya", 40)] = 1000;
+
+    pair<Person, int> mypair(Person("Mother", 75), 3000);
+    records.insert(mypair);
+    // Same key is not allowed in Map DS.
+    records.insert(make_pair(Person("Apan", 35), 2000));
+    records.insert(make_pair(Person("Father", 76), 2000));
+    //This record won't be inserted since Person with name Father is already there operator < will reject adding this to the map.
+    //But the value only get updated.
+    //if you want Father Person to be added consdier change the age and change the operator < overloading method with age comparision .
+
+    records.insert(make_pair(Person("Father", 77), 3000));
+    for (map<Person, int>::iterator it = records.begin(); it != records.end(); it++) {
+        it->first.Print();
+        cout << it->second;
+    }
+
+    return 0;
+}
+
+////////////////////////
+// Assingment Operator
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person {
+private:
+    string name;
+    int age;
+public:
+    Person() :name(""), age(0) {
+        cout << "Paramterless Constructor is called" << endl;
+    }
+
+    Person(string name, int age) :name(name), age(age) {
+        cout << "Parameter Constructor is called" <<endl;
+    }
+
+    Person(const Person& other) {
+        age = other.age;
+        name = other.name;
+        cout << "Copy Constructor is called" << endl;
+    }
+
+   const Person &operator= (const Person &other){
+       cout << "Assingment is called" << endl;
+       age = other.age;
+       name = other.name;
+       return *this;
+    }
+
+    // always first argument to any member method is the [this] operator.
+    void Print() const{
+        cout << "name :" << name << "age:" << age << endl;
+    }
+};
+
+using namespace std;
+int main() {
+    Person person1,person2("Surya",40),person3("Apan" ,35);
+    person1.Print();
+    //person1 = person2;
+    // the default operator call on the class person.Shallow copy.
+    //person1.operator= (person2);
+    //person2 = person3;
+    //person2.Print();
+    // Operator= won't be called , but copy constructor will get called.
+    // Copy Intialization.
+    Person person4 = person3;
+    person4.Print();
+	return 0;
+}
+//////////////////
+// Left shit  Operator
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person {
+private:
+    string name;
+    int age;
+public:
+    Person() :name(""), age(0) {
+        cout << "Paramterless Constructor is called" << endl;
+    }
+
+    Person(string name, int age) :name(name), age(age) {
+        cout << "Parameter Constructor is called" <<endl;
+    }
+
+
+   const Person &operator= (const Person &other){
+       cout << "Assingment is called" << endl;
+       age = other.age;
+       name = other.name;
+       return *this;
+    }
+
+    // always first argument to any member method is the [this] operator.
+    void Print() const{
+        cout << "name :" << name << "age:" << age << endl;
+    }
+    // since we need to access the private member we are using friend . else we could use the getter method.
+   friend ostream &operator<<(ostream &out, const Person &other) {
+       out << other.name << other.age; 
+       return out;
+    }
+};
+// + is having right associative int x = 1 + 2+ 3 , first 2+ 3 will add then it adds 1.
+// left shift having left to right associative.
+
+using namespace std;
+int main() {
+    Person person1,person2("Surya",40),person3("Apan" ,35);
+    //person1.Print();
+    Person person4 = person3;
+    //person4.Print();
+    // instead of having print in the class how about overloading the left shift operator.
+    cout << person4 << endl;
+    // left to right associative. 
+    cout << person4 <<  person2 << endl;
+    // for the above statement to work we have to overload the operator <<
+	return 0;
+}
