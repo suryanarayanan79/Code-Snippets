@@ -1424,3 +1424,394 @@ int main() {
     }
 
 }
+/////////////////Stack using array in template. form
+#include <iostream>
+template<typename T,int size>
+class Stack {
+	T m_Buffer[size];
+	int m_Top{ -1 };
+public:
+	Stack() = default;
+	Stack(const Stack<T, size> &obj) {
+		m_Top = obj.m_Top;
+		for (int i = 0; i <= m_Top; ++i) {
+			m_Buffer[i] = obj.m_Buffer[i];
+		}
+	}
+	void Push(const T &elem) {
+		m_Buffer[++m_Top] = elem;
+	}
+	void Pop();
+	const T& Top()const {
+		return m_Buffer[m_Top];
+	}
+	bool IsEmpty() {
+		return m_Top == -1; 
+	}
+	/*
+	Shorthand notation for class name as return type,
+	because it appears inside the class
+	*/
+	static Stack Create();
+};
+
+template<typename T, int size>
+void Stack<T, size>::Pop() {
+	--m_Top;
+}
+
+template<typename T, int size>
+/*
+Longhand notation for class name as return type,
+because it appears outside the class
+*/
+Stack<T, size> Stack<T, size>::Create() {
+	return Stack<T, size>();
+}
+int main() {
+	/*
+	The template parameter list is part of the type of class.
+	The following code will not work.
+
+	Stack<float, 9> s = Stack<float, 10>::Create();
+				 ^
+	*/
+	Stack<float, 10> s = Stack<float, 10>::Create();
+	s.Push(3);
+	s.Push(1);
+	s.Push(6);
+	s.Push(9);
+	auto s2(s);
+	while (!s2.IsEmpty()) {
+		std::cout << s2.Top() << " ";
+		s2.Pop();
+	}
+	Stack<char *, 5> ss;
+	ss.Push("Hello");
+	auto ss2(ss);
+	return 0;
+}
+#include<iostream>
+using namespace std;
+
+template<typename T>
+class LinkedList {
+    struct Node {
+        T val;
+        Node* next;
+        Node(T arg) :val{ arg }, next{ nullptr }{
+            cout << "Node Ctor" << endl;
+        };
+        ~Node() {
+            cout << "Node Dtor" << endl;
+        }
+    };
+    Node* head;
+    int count;
+public:
+
+    LinkedList() :head{ nullptr }, count{ 0 }{
+        cout << "Linked List Ctor called" << endl;
+    };
+    ~LinkedList() {
+        // delete all the nodes.
+        cout << "LinkedList Dtor called" << endl;
+        if (head != nullptr) {
+            while (head != nullptr) {
+                head = head->next;
+                delete head;
+            }
+        }
+    }
+    template<typename T>
+    void AddNodeAtHead(const T& val) {
+        if (head == nullptr) {
+            head = new Node{val};
+            head->next = nullptr;
+        }
+        else {
+            Node* temp = new Node{val};
+            temp->next = head;
+            head = temp;
+        }
+        count++;
+    }
+
+
+    void displayList() {
+        if (head != nullptr) {
+            Node* temp = head;
+            while (temp != nullptr) {
+                cout << temp->val << "\t";
+                temp = temp->next;
+            }
+        }
+    }
+};
+
+int main() {
+    LinkedList<int> list;
+    list.AddNodeAtHead(10);
+    list.AddNodeAtHead(20);
+    list.AddNodeAtHead(200);
+    list.AddNodeAtHead(2200);
+    list.displayList();
+}
+//////
+#include <iostream>
+#include<array>
+using namespace std;
+
+int main() {
+	array<int, 5> myarray1{ 2,3,4,5,6 };
+	array<int, 5> myarray2 = { 2,3,4,5,6 };
+	array<int, 5> myarray3;
+	myarray3 = { 2,3,4,5,6 };
+	array<int, 5> myarray4;
+	myarray4.fill(300);
+
+	cout <<"Value at 5 " << myarray1.at(3);
+	cout << "Value at index 2" << myarray1[2]<<endl;
+	cout << "Value at index 0" << myarray1.front()<<endl;
+	cout << "Value at index end" << myarray1.back()<<endl;
+	cout << "All Value at " << myarray1.data();
+	cout << "All Value at myarray" << myarray4.at(4);
+	return 0;
+}
+
+///////////////////////////
+#include <iostream>
+#include<vector>
+using namespace std;
+//main draw back of using vector is ,dynamic size increase, while doing so it will allocate double the 
+// size of the allocation and TODO learn internal working of the Vector in c++.
+//vector.reserve(max size) ; will allocate the max capacity before hand so that dynamic capcity , copy wont affect the  performance.
+int main() {
+	vector<int> myvector1;
+	vector<int> myvector3(5,20); //store for 5 elements with value 20 in each.
+	vector<int> myvector2; // create empty vector.
+	//cout << "value at 4 using at\t" << myvector1.at(4)<< endl; // this is exception safe.
+	//cout << "value at 6 using []" << myvector1[6] << endl; // this not is exception safe.
+	for (int i = 0; i < 32; i++) {
+		myvector1.push_back(i);
+		cout <<"Capacity\t" << myvector1.capacity() << "Size\t" << myvector1.size()<<endl;
+	}
+	return 0;
+}
+////////////////////////
+TODO
+what is the difference between the following set of codes.
+#include <iostream>
+#include<set>
+using namespace std;
+int main() {
+	set<int> myset{ 1,4,2,7,4,6,9,2,4,5,1,0,3 };
+	for (auto e : myset) {
+		cout << e ;
+	}
+	cout << endl;
+	for (const auto e : myset) {
+		cout << e;
+	}
+	cout << endl;
+	for (const auto &e : myset) {
+		cout << e;
+	}
+	return 0;
+}
+/////////////////////////////
+#include <iostream>
+#include<set>
+#include<functional>
+using namespace std;
+// set is a container with only unique SORTED elements.
+// it is implemented using red black tree .
+//we can pass the sorting order while constructing the set.
+//set<int,greater>
+//set<int,less>
+// if we want to store user defined types , then we have to provide the comparision function so that set will sort the datas and store.
+class Person {
+public:
+	string Name;
+	int age;
+	bool operator < (const Person& rhs) const { return age > rhs.age; }
+	bool operator > (const Person& rhs) const { return age < rhs.age; }
+};
+int main() {
+	set<Person,std::less<>> myset = { {"surya",40},{"shalika",9},{"aparna",35},{"prvarthika",5} };
+	for (const auto &p: myset) {
+		cout << p.Name << "\t";
+	}
+
+	return 0;
+}
+/////
+TODO  pls refere cppnuts video on container inside a container.
+construct a tree using vector inside a vector. coding pending.
+
+#include <iostream>
+#include<set>
+#include<functional>
+#include <vector>
+#include<algorithm>
+#include <string>
+using namespace std;
+// set is a container with only unique SORTED elements.
+// it is implemented using red black tree .
+//we can pass the sorting order while constructing the set.
+//set<int,greater>
+//set<int,less>
+// if we want to store user defined types , then we have to provide the comparision function so that set will sort the datas and store.
+class Person {
+public:
+	string Name;
+	int age;
+	bool operator < (const Person& rhs) const { return age > rhs.age; }
+	bool operator > (const Person& rhs) const { return age < rhs.age; }
+
+};
+//[[deprecated]]
+//int MyMethod() {
+//	return 10;
+//}
+//variable templates.
+int main() {
+	vector<int> myVec{ 4,3,34,2,7,33,88,123 };
+	vector<int> newVec;
+	int sum = 0;
+	sort(myVec.begin(), myVec.end(), [](int x, int y) {return x < y; }); // Example for lambda
+	long decimalVal = 1'000'00; // new feature digit separator in c++ 14
+	int b = 0b11111; // new feature binary literal
+	copy_if(myVec.begin(), myVec.end(), back_inserter(newVec), [](int x) {return (x % 2) == 0;});
+	for_each(myVec.begin(), myVec.end(), [&](int x) {sum += x; });
+	set<Person,std::less<>> myset = { {"surya",40},{"shalika",9},{"aparna",35},{"prvarthika",5} };
+	for (const auto &p: myset) {
+		cout << p.Name << "\t";
+	}
+	//cout << MyMethod();
+	//auto add = [](auto x, auto z){return x + z};
+	//TODO decltype
+
+	cout << "Generic lambda" << add(12 , 12);
+	cout << "Generic lambda" << add("surya" , "gaming");
+	cout << decimalVal << endl;
+	cout << b << endl;
+	for (const auto& v : myVec) {
+		cout << v << "\t";
+	}
+	cout << endl << "\\\\\\\\\\\\\\\\\\\\\\" << endl;
+	for (const auto& v : newVec) {
+		cout << v << "\t";
+	}
+	cout << endl << "\\\\\\\\\\\\\\\\\\\\\\" << endl;
+	cout << "Sum \t" << sum;
+	return 0;
+}
+
+// set is a container with only unique SORTED elements.
+// it is implemented using red black tree .
+//we can pass the sorting order while constructing the set.
+//set<int,greater>
+//set<int,less>
+// if we want to store user defined types , then we have to provide the comparision function so that set will sort the datas and store.
+
+	// Creates a max heap 
+	priority_queue <int> pq;
+	int nums[]{ 2,33,5,66,7,22,1,66,234,7,4 };
+	for (int n : nums) {
+		pq.push(n);
+	}
+
+	// One by one extract items from max heap 
+	while (pq.empty() == false)
+	{
+		cout << pq.top() << " ";
+		pq.pop();
+	}
+	
+	////////////////// 
+	How this code Behave.
+vector fill(istream& is)
+{
+vector res;
+for (double x; is>>x; ) res.push_back(x);
+return res;
+}
+
+////////////////
+// string::crbegin/crend
+#include <iostream>
+#include <string>
+
+int main ()
+{
+  std::string str ("lorem ipsum");
+  for (auto rit=str.crbegin(); rit!=str.crend(); ++rit)
+    std::cout << *rit;
+  std::cout << '\n';
+
+  return 0;
+}
+//Return const_reverse_iterator to reverse beginning
+//Returns a const_reverse_iterator pointing to the last character of the string (i.e., its reverse beginning).
+///
+
+int main() {
+
+	int scores[]{ 100, 95, 89 };
+
+	cout << "Value of scores: " << scores << endl;
+
+	int* score_ptr{ scores };
+	cout << "Value of score_ptr: " << score_ptr << endl;
+
+	cout << "\nArray offset notation-------------------------" << endl;
+	cout << *scores << endl;
+	cout << *(scores + 1) << endl;
+	cout << *(scores + 2) << endl;
+
+	cout << endl;
+	return 0;
+}
+////
+void display(int* array, int sentinel) {
+	while (*array != sentinel)
+		cout << *array++ << " ";// *(array + 1)
+	cout << endl;
+}
+
+/////////////
+
+Moden C++ Auto,dectype
+#include <iostream>
+#include <string>
+#include<typeinfo>
+
+using namespace std;
+class Parent {
+private:
+    int one;
+public:
+    Parent() :one(0) {
+        cout << "Parent Constructor\n";
+    }
+};
+
+template<typename T, typename U>
+auto Sum(T t,U u) -> decltype(u){
+    return t + u;
+}
+
+int main() {
+    Parent p;
+    string val;
+    auto v = "sfsfd";
+    cout << typeid(v).name();
+    //string name = "Surya";
+    decltype(val) name = "Surya";
+    //cout << name;
+    cout << Sum(10,"Narayanan");
+    //cout << MyMethod();
+	return 0;
+}
+////////////////
