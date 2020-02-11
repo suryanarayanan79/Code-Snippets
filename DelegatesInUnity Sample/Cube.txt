@@ -14,10 +14,6 @@ public class Cube : MonoBehaviour {
 		Debug.Log(arg1 + gameObject.name);
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 	void CubeAnimate(){ // action to be performed i.e delegate method.
 		Debug.Log("Star Cube animate" + gameObject.name);
 		

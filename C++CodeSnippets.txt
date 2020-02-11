@@ -4,27 +4,34 @@
 #include<vector>
 using namespace std;
 
+
 int main() {
-	vector<int> v1{ 3,3,3,3 };
-	vector<int> v2(5);
-	for (int i : v2) {
-		cout << i;
-	}
-	for (int i : v1) {
-		cout << i;
-	}
-	cout << endl;
-	int a[]{ 12,12,12,12 };
-	vector<int> v3(4,344);
-	for (auto v : v3) {
-		cout << v;
-	}
-	cout << endl;
-	////Loops never ends sinces the last is not set , it will never i will never be more than zero.
-	//for (int i = 0; i < v3.size();) {
-	//	cout << v3.at(i); // at checks the index out of range execptions.f
-	//}
+    vector<int> v1{ 3,3,3,3 };
+    vector<int> v2(5);
+    for (int i : v2) {
+        cout << i;
+    }
+    cout << endl;
+
+    for (int i : v1) {
+        cout << i;
+    }
+    cout << endl;
+    int a[]{ 12,12,12,12 };
+    vector<int> v3(4, 344);
+    //C++ 11 feature auto Range.
+    for (auto v : v3) {
+        cout << v;
+    }
+    cout << endl;
+    //Loops never ends sinces the last is not set , 
+    //it will never i will never be more than zero.
+    for (int i = 0; i < v3.size();/*i++*/ /* comment his out for infinite loop*/) {
+    	cout << v3.at(i); // at checks the index out of range execptions.f
+    }
 }
+
+
 
 /////////////////////
 Range based for loop in c++ 11
@@ -71,7 +78,8 @@ int main() {
 }
 
 ////////////////////////
-// demonstraion of subclass exception and parent class exception . Order of the catch block is important here. Always derived class exception should be in the first palce.
+// demonstraion of subclass exception and parent class exception . 
+//Order of the catch block is important here. Always derived class exception should be in the first palce.
 #include <iostream>
 #include <exception>
 
@@ -192,17 +200,10 @@ int main() {
 	map<int, Person> records;
     //Person person{ "Surya",40 };
     records[1000] = Person("Surya",40);
-	//ages["surya"] = 40;
-	//ages["Apan"] = 35;
-	//ages["PravarThika"] = 6;
-	//ages["shalika"] = 9;
-	//// this add the key to the map.  add a default int 0.
-	//cout << ages["father"];
 	pair<int,Person> mypair(2000,Person("Mother",75));
-	////since already key father is there it won't add in the map.
-	//pair<string, int> mypair2("father", 79);
+	
 	records.insert(mypair);
-	//ages.insert(mypair2);
+
     // Same key is not allowed in Map DS.
 	records.insert(make_pair(3000, Person("Apan", 35)));
 	//ages.insert(make_pair("Father-In-Law",70));
@@ -237,7 +238,7 @@ public:
     }
 
     Person(string name, int age) :name(name), age(age) {
-        cout << "Parameter Constructor is called" <<endl;
+        cout << "Parameter Constructor is called" << endl;
     }
 
     Person(const Person& other) {
@@ -245,7 +246,8 @@ public:
         name = other.name;
         cout << "Copy Constructor is called" << endl;
     }
-    bool operator < (const Person &other) const {
+
+    bool operator < (const Person& other) const {
         // this will accomodate the Person Object with same name but different age.
         if (name == other.name) {
             return age < other.age;
@@ -256,7 +258,7 @@ public:
         }
     }
 
-    void Print() const{
+    void Print() const {
         cout << "name :" << name << "age:" << age << endl;
     }
 };
@@ -265,33 +267,25 @@ using namespace std;
 int main() {
     // Map sort the pair it stores , since Person is a class , map by itself does not know how to sort the person class .
     // Hence we need to provide a operator < overloding to the person class.
-	map<Person, int> records;
+    map<Person, int> records;
     records[Person("Surya", 40)] = 1000;
-	//// this add the key to the map.  add a default int 0.
-	//cout << ages["father"];
-	pair<Person,int> mypair(Person("Mother",75),3000);
-	records.insert(mypair);
+
+    pair<Person, int> mypair(Person("Mother", 75), 3000);
+    records.insert(mypair);
     // Same key is not allowed in Map DS.
-	records.insert(make_pair(Person("Apan", 35),2000));
+    records.insert(make_pair(Person("Apan", 35), 2000));
     records.insert(make_pair(Person("Father", 76), 2000));
     //This record won't be inserted since Person with name Father is already there operator < will reject adding this to the map.
     //But the value only get updated.
     //if you want Father Person to be added consdier change the age and change the operator < overloading method with age comparision .
 
     records.insert(make_pair(Person("Father", 77), 3000));
-	//ages.insert(make_pair("Father-In-Law",70));
-	for (map<Person, int>::iterator it = records.begin(); it != records.end();it++) {
-         it->first.Print();
-         cout << it->second;
-	}
-	//// To find a key in the map 
-	//if (ages.find("Mother") != ages.end()) {
-	//	cout << "Key Found" << endl;
-	//}
-	//else {
-	//	cout << "Key not Found" << endl;
-	//}
-	return 0;
+    for (map<Person, int>::iterator it = records.begin(); it != records.end(); it++) {
+        it->first.Print();
+        cout << it->second;
+    }
+
+    return 0;
 }
 
 ////////////////////////
@@ -531,7 +525,7 @@ class Complex {
 private:
     double real;
     double imaginary;
-public:
+public:2
     Complex() : real(0), imaginary(0) {
         cout << "Paramterless Constructor is called" << endl;
     }
@@ -552,9 +546,11 @@ public:
         imaginary = other.imaginary;
         return *this; 
     }
+	
     double getReal() const{
         return real;
     }
+	
     double getImaginary() const {
         return imaginary;
     }
@@ -583,7 +579,7 @@ int main() {
     Complex c2(12,72);
     Complex c3 = c2 + 100;
     // this statement wont work since the + operator , first arg is double and second is complex 
-    // but in our operator overloading we have complex as first arg and double as the second arg.
+    // but in our operator overloading we have complex as first arg complex and double as the second arg.
     //Complex c3 =  100 + c2;
     //cout << c3 << c1;
     cout << c3;
@@ -1093,4 +1089,338 @@ int main() {
 	      [this]() {         salary = 1500000;
      cout << "Name:" << name << "Age:" << age <<"\tSalary:\t" << salary << endl; }();
 	return 0;
+}
+
+// Constructor Intialization list is better than , having the intialization in the body. since the later one is //like assingment , for complex class[composite class or class with a class] assingment is a memory over head.
+// debug the code and examine the this pointer. then you will understand the above fact.
+#include<iostream>
+#include<string>
+#include<typeinfo>
+using namespace std;
+
+class Parent {
+private:
+    int zero;
+public:
+    Parent() :zero{0} {
+        cout << "Parent Constructor\n";
+    }
+    virtual void Print() {
+        cout << zero << "Zero\n";
+    }   
+};
+
+class FirstChild : public Parent {
+private:
+    int one;
+public:
+    FirstChild() :one{1} {
+        cout << "FirstChild Constructor\n";
+    }
+
+     void Print() {
+        cout << "Hello FirstChild" << one;
+    }
+};
+
+class SecondChild : public FirstChild {
+private:
+    int second;
+    string name;
+public:
+    SecondChild() :second{ 2 } {
+        cout << "SecondChild Constructor\n";
+    }
+
+    SecondChild(int x, string n) :second{ x }, name{ n }{
+
+    }
+
+    void Print() {
+        cout << "Second Child" << second << name ;
+    }
+
+    void Increment() {
+        second++;
+    }
+    
+};
+
+int main() {
+ 
+    Parent* parentBaseClass = new SecondChild(22,"asdfasdf");
+    parentBaseClass->Print();
+    //Parent* ParentPointer[5];
+    //ParentPointer[0] = &s[0];
+    //const std::type_info &ti = typeid(ParentPointer[0]);
+    //if (ti == typeid(SecondChild)) {
+    //    cout << "\n" << ti.name();
+    //}
+    // RTTI is useful while down casting. 
+    
+    return 0;
+}
+//dynamic_cast
+#include <iostream>
+#include <string>
+using namespace std;
+// The parent class
+class Shape {
+    string s_name;
+public:
+    Shape(string name) : s_name(name) {}
+    virtual void get_info() {
+        cout << s_name << endl;
+    }
+};
+// The child class
+class Square : public Shape {
+    int side;
+public:
+    Square(string S_name, int value)
+        : Shape(S_name), side(value) {}
+    void get_info() {
+        cout << "Area of the square is: " << side * side << endl;
+    }
+};
+// The child class
+class Rectangle : public Shape {
+    int length;
+    int width;
+public:
+    Rectangle(string S_name, int len, int wid)
+        : Shape(S_name), length(len), width(wid) {}
+    void get_info() {
+        cout << "Area of the rectangle is: " << length * width << endl;
+
+    }
+};
+Shape* create_square(string S_name, int value) {
+    return new Square(S_name, value);
+}
+Rectangle* create_rectangle(string S_name, int len, int wid) {
+    return new Rectangle(S_name, len, wid);
+}
+int main() {
+    // quad is the pointer to the parent
+    // class, it needs to be casted to be used to
+    // access the method of the child class.
+    Shape* quad = create_square("Quadliteral", 4);
+    // Trying to downcast the parent class pointer to
+    // the child class pointer.
+    Square* sq = dynamic_cast<Square*>(quad);
+    // dynamic_cast returns returns null if the type
+    // to be casted into is a pointer and the cast
+    // is unsuccessful.
+    if (sq) {
+        sq->get_info();
+    }
+    Rectangle* rect = create_rectangle("Quadliteral", 4, 5);
+    // An example of a valid upcasting
+    Shape* quad1 = dynamic_cast<Shape*>(rect);
+    // An example of invalid downcasting
+    Square* sq1 = dynamic_cast<Square*>(quad1);
+    if (sq1 == NULL) {
+        cout << "Invalid casting." << endl;
+    }
+}
+
+#include <iostream>
+//Old Code
+//int Max(int x, int y) {
+//	return x > y ? x : y;
+//}
+//float Max(float x, float y) {
+//	return x > y ? x : y;
+//}
+
+//Primary Template
+template<typename T>
+T Max(T x, T y) {
+	std::cout << typeid(T).name() << std::endl;
+	return x > y ? x : y;
+}
+//Explicit Instantiation
+template char Max(char x, char y);
+
+//Explicit Specialization
+template<> const char * Max<const char*>(const char *x, const char *y) {
+	std::cout << "Max<const char*>()" << std::endl;
+	return strcmp(x, y) > 0 ? x : y;
+}
+
+void Examples() {
+#pragma region Instantiation Examples
+	Max(static_cast<float>(3), 5.5f);
+
+	//Override compiler's deduction process
+	Max<double>(3, 6.2);
+
+	//Causes implicit instantiation of Max<int>
+	int(*pfn)(int, int) = Max;
+
+#pragma endregion
+#pragma region Explicit Instantiation
+	const char *b{ "B" };
+	const char *a{ "A" };
+	auto s = Max(a, b);
+	std::cout << s << std::endl;
+#pragma endregion
+}
+
+//Non-type template parameter
+template<int size>
+void Print() {
+	char buffer[size];
+	std::cout << size << std::endl;
+}
+//Requires size as explicit argument
+template<typename T>
+T Sum(T*parr, int size){
+	T sum{};
+	for (int i = 0; i < size; ++i) {
+		sum += arr[i];
+	}
+	return sum;
+}
+//Size is implicitly calculated in non-type template argument
+template<typename T,int size>
+T Sum(T (&arr)[size]) {
+	T sum{};
+	for (int i = 0; i < size; ++i) {
+		sum += arr[i];
+	}
+	return sum;
+}
+int main() {
+	Print<3>();
+	int arr[]{ 3,1,9,7 };
+	//int (&ref)[5] = arr ;
+	int sum = Sum(arr);
+	std::cout << sum << std::endl; 
+	return 0;
+}
+////Templates Code Sample
+#include <iostream>
+using namespace std;
+
+template<typename T>T Add(T x, T y) {
+    return x + y;
+}
+
+//int ArraySum(int* pArr, int arrSize); //Returns the sum of array elements
+template<typename T>T ArraySum(T* pArr,T arrSize) {
+    T sum{ 0 };
+    for (int i = 0; i < arrSize; i++) {
+        sum += pArr[i];
+    }
+    return sum;
+}
+
+//int Max(int* pArr, int arrSize); //Return the largest element in the array
+template<typename T>
+T Max(T* ptr,T noOfElements) {
+    // Formula to find the total elements 
+    //constexpr std::size_t totalElement = sizeof(ptr) / sizeof(*ptr);
+    std::qsort(ptr, noOfElements,sizeof(*ptr), [](const void* a, const void* b)
+    {
+        T arg1 = *static_cast<const T*>(a);
+        T arg2 = *static_cast<const T*>(b);
+
+        if (arg1 > arg2) return -1;
+        if (arg1 < arg2) return 1;
+        return 0;
+
+        //  return (arg1 > arg2) - (arg1 < arg2); // possible shortcut
+        //  return arg1 - arg2; // erroneous shortcut (fails if INT_MIN is present)
+    });
+    //for (int ai : ptr)
+    //    std::cout << ai << ' ';
+    return *ptr;
+}
+
+int main() {
+    int data[]{ 10,20,30 };
+    float scores[]{ 12.74f,6.6f,4.6f,12.2f };
+    //pointer pointing to the array of 3 ints.
+    //int(*ptr)[3] = &data;
+    cout << "ArraySum" << ArraySum(scores, static_cast<float>(4)) << endl;
+    // how to type convert the float array as int array. in the above case of scores. challenge.
+    cout << Add(scores[0],scores[1]);
+    cout << "Max is" << Max(scores,static_cast<float>(4));
+	    // example for template address , for template instantiation.Max is not called, this will generate the template code for Max deduce int for typename.
+    int (*ptrMax)(int*, int) = Max;
+	return 0;
+}
+/////Dynamic Cast/////
+// For correcting the downcast.since quad can not access the member of the square class . dynamic_cast is //required to properly do the down cast.
+//dynamic_cast
+#include <iostream>
+#include <string>
+using namespace std;
+// The parent class
+class Shape {
+    string s_name;
+public:
+    Shape(string name) : s_name(name) {}
+    virtual void get_info() {
+        cout << s_name << endl;
+    }
+};
+// The child class
+class Square : public Shape {
+    int side;
+public:
+    Square(string S_name, int value)
+        : Shape(S_name), side(value) {}
+    void get_info() {
+        cout << "Area of the square is: " << side * side << endl;
+    }
+
+    int getValue() {
+        return side;
+    }
+};
+// The child class
+class Rectangle : public Shape {
+    int length;
+    int width;
+public:
+    Rectangle(string S_name, int len, int wid)
+        : Shape(S_name), length(len), width(wid) {}
+    void get_info() {
+        cout << "Area of the rectangle is: " << length * width << endl;
+    }
+};
+Shape* create_square(string S_name, int value) {
+    return new Square(S_name, value);
+}
+Rectangle* create_rectangle(string S_name, int len, int wid) {
+    return new Rectangle(S_name, len, wid);
+}
+int main() {
+    // quad is the pointer to the parent
+    // class, it needs to be casted to be used to
+    // access the method of the child class.
+    Shape* quad = create_square("Quadliteral", 4);
+    // Trying to downcast the parent class pointer to
+    // the child class pointer.
+    Square* sq = dynamic_cast<Square*>(quad);
+    // dynamic_cast returns returns null if the type
+    // to be casted into is a pointer and the cast
+    // is unsuccessful.
+    if (quad) {
+        quad->get_info();
+    }
+    Shape* rect = create_rectangle("Quadliteral", 4, 5);
+    //rect->get_info();
+
+    //// An example of a valid upcasting
+    //Shape* quad1 = dynamic_cast<Shape*>(rect);
+    //// An example of invalid downcasting
+    Square* sq1 = dynamic_cast<Square*>(rect);
+    if (sq1 == NULL) {
+        cout << "Invalid casting." << endl;
+    }
+
 }
