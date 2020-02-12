@@ -1317,6 +1317,15 @@ template<typename T>T ArraySum(T* pArr,T arrSize) {
     return sum;
 }
 
+//using non-template argument and reference to an array.
+template<typename T,int size>T ArraySum(T(&pArr)[size]) {
+    T sum{ 0 };
+    for (int i = 0; i < size; i++) {
+        sum += pArr[i];
+    }
+    return sum;
+}
+
 //int Max(int* pArr, int arrSize); //Return the largest element in the array
 template<typename T>
 T Max(T* ptr,T noOfElements) {
@@ -1815,3 +1824,23 @@ int main() {
 	return 0;
 }
 ////////////////
+
+#include <iostream>
+using namespace std;
+
+// array pass by reference.
+// 
+void Display(const int(& p)[3]) {
+    for (auto i : p) {
+        cout << i <<",";
+    }
+    //p[0] = 50;// Cmpile error since p is const.
+    cout << endl;
+}
+int main() {
+    int data[]{ 10,20,30 };
+    float scores[]{ 12.74f,6.6f,4.6f,12.2f };
+    Display(data);
+    cout << data[0];
+    return 0;
+}
